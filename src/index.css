@@ -147,9 +147,9 @@ a { color: inherit; text-decoration: none; }
   position: relative;
   width: 100%;
   height: 480px;
-  background-image: url('https://sm.ign.com/t/ign_me/gallery/8/8-trackman/8-trackmania-gameplay-screenshots_qvfp.1400.jpg');
+  background-image: url('/images/hero-main.jpeg');
   background-size: cover;
-  background-position: center 70%;
+  background-position: center center;
   display: flex;
   align-items: center;
   justify-content: center;
