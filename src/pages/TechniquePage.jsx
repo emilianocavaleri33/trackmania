@@ -33,86 +33,729 @@ function ScreenshotPlaceholder({ label, colors }) {
 
 function TrajectorySVG({ technique }) {
   const slug = technique?.slug || '';
+  const surface = technique?.surface || 'Qualsiasi';
   
-  // Define unique SVG paths for each movement type
-  const getPathData = () => {
-    if (slug.includes('drift')) {
-      // Drift: Curva lunga con scivolata laterale fluida
-      return "M 20 180 Q 100 180 180 120 T 380 80 Q 480 60 580 80";
-    }
+  // Define realistic track layouts for each technique
+  const getTrackSVG = () => {
     if (slug === 'speed-slide') {
-      // Speedslide: Curva stretta con traiettoria compressa e rapida
-      return "M 20 100 C 80 100 120 200 200 200 S 320 100 400 100 S 520 100 580 100";
+      // Speed Slide: Long gentle curve on asphalt with drift trajectory
+      return `
+        <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <defs>
+            <linearGradient id="asphalt" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#2a2a2a"/>
+              <stop offset="100%" style="stop-color:#1a1a1a"/>
+            </linearGradient>
+            <linearGradient id="trajectory" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#00ff88"/>
+              <stop offset="100%" style="stop-color:#0088ff"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          <!-- Background -->
+          <rect width="400" height="280" fill="#1a1a1a"/>
+          
+          <!-- Track (long gentle curve) -->
+          <path d="M 20 100 Q 200 100 380 60 L 380 100 Q 200 140 20 140 Z" 
+                fill="url(#asphalt)" stroke="#ffffff" stroke-width="2"/>
+          
+          <!-- Track edges -->
+          <path d="M 20 100 Q 200 100 380 60" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.5"/>
+          <path d="M 20 140 Q 200 140 380 100" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.5"/>
+          
+          <!-- Speed Slide trajectory (wide drift line) -->
+          <path d="M 30 110 Q 180 110 370 75" 
+                fill="none" stroke="url(#trajectory)" stroke-width="4" 
+                stroke-dasharray="400" stroke-dashoffset="400"
+                filter="url(#glow)">
+            <animate attributeName="stroke-dashoffset" from="400" to="0" dur="1.5s" fill="freeze"/>
+          </path>
+          
+          <!-- Direction arrows -->
+          <polygon points="350,75 360,70 360,80" fill="#00ff88" opacity="0.8">
+            <animateTransform attributeName="transform" type="translate" 
+                              values="0,0; 20,0; 0,0" dur="2s" repeatCount="indefinite"/>
+          </polygon>
+          
+          <!-- Car animation -->
+          <rect width="12" height="8" fill="#ff4444" rx="2">
+            <animateMotion dur="3s" repeatCount="indefinite">
+              <mpath href="#carPath"/>
+            </animateMotion>
+          </rect>
+          <path id="carPath" d="M 30 110 Q 180 110 370 75" fill="none"/>
+          
+          <!-- Surface badge -->
+          <rect x="10" y="250" width="80" height="25" fill="#2a4858" rx="3"/>
+          <text x="15" y="267" font-family="Arial" font-size="12" fill="#ffffff">🏁 Asfalto</text>
+        </svg>
+      `;
     }
-    if (slug === 'bug-slide' || slug.includes('neoslide')) {
-      // Neoslide/Bug-slide: Doppio cambio direzione angolare
-      return "M 20 150 L 120 150 L 120 60 L 250 60 L 250 240 L 380 240 L 380 150 L 580 150";
+    
+    if (slug === 'bug-slide') {
+      // Bug Slide: Sharp angle change after landing
+      return `
+        <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <defs>
+            <linearGradient id="dirt" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#4a3a1a"/>
+              <stop offset="100%" style="stop-color:#2a1a0a"/>
+            </linearGradient>
+            <linearGradient id="trajectory" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#ff6600"/>
+              <stop offset="100%" style="stop-color:#ff0066"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          <rect width="400" height="280" fill="#2a1a0a"/>
+          
+          <!-- Landing track -->
+          <rect x="20" y="80" width="150" height="40" fill="url(#dirt)" stroke="#8b6914" stroke-width="2" rx="5"/>
+          <!-- Turn track -->
+          <rect x="150" y="120" width="230" height="40" fill="url(#dirt)" stroke="#8b6914" stroke-width="2" rx="5"/>
+          
+          <!-- Bug Slide trajectory (sharp 90° turn) -->
+          <path d="M 30 100 L 170 100 L 170 140 L 370 140" 
+                fill="none" stroke="url(#trajectory)" stroke-width="4" 
+                stroke-dasharray="450" stroke-dashoffset="450"
+                filter="url(#glow)">
+            <animate attributeName="stroke-dashoffset" from="450" to="0" dur="1.5s" fill="freeze"/>
+          </path>
+          
+          <!-- Direction arrows -->
+          <polygon points="350,140 360,135 360,145" fill="#ff6600" opacity="0.8">
+            <animateTransform attributeName="transform" type="translate" 
+                              values="0,0; 20,0; 0,0" dur="2s" repeatCount="indefinite"/>
+          </polygon>
+          
+          <!-- Car -->
+          <rect width="12" height="8" fill="#ff4444" rx="2">
+            <animateMotion dur="3s" repeatCount="indefinite">
+              <mpath href="#carPath"/>
+            </animateMotion>
+          </rect>
+          <path id="carPath" d="M 30 100 L 170 100 L 170 140 L 370 140" fill="none"/>
+          
+          <!-- Surface badge -->
+          <rect x="10" y="250" width="80" height="25" fill="#4a3a1a" rx="3"/>
+          <text x="15" y="267" font-family="Arial" font-size="12" fill="#ffffff">🏖️ Dirt</text>
+        </svg>
+      `;
     }
-    if (slug === 'superdive' || slug.includes('jump')) {
-      // Salto/Jump: Arco verticale pronunciato in aria
-      return "M 20 280 Q 150 50 300 20 Q 450 50 580 280";
+    
+    if (slug === 'double-drift') {
+      // Double Drift: S-curve with two drift points
+      return `
+        <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <defs>
+            <linearGradient id="asphalt2" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#2a2a2a"/>
+              <stop offset="100%" style="stop-color:#1a1a1a"/>
+            </linearGradient>
+            <linearGradient id="trajectory" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#00ffcc"/>
+              <stop offset="50%" style="stop-color:#ff00ff"/>
+              <stop offset="100%" style="stop-color:#00ffcc"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          <rect width="400" height="280" fill="#1a1a1a"/>
+          
+          <!-- S-curve track -->
+          <path d="M 20 140 Q 100 140 100 80 T 180 80 Q 260 80 260 140 T 380 140
+                   L 380 180 Q 260 180 260 120 T 180 120 Q 100 120 100 180 T 20 180 Z" 
+                fill="url(#asphalt2)" stroke="#ffffff" stroke-width="2"/>
+          
+          <!-- Double drift trajectory -->
+          <path d="M 30 160 Q 90 160 90 100 Q 170 100 170 160 Q 250 160 250 100 Q 370 100 370 160" 
+                fill="none" stroke="url(#trajectory)" stroke-width="4" 
+                stroke-dasharray="500" stroke-dashoffset="500"
+                filter="url(#glow)">
+            <animate attributeName="stroke-dashoffset" from="500" to="0" dur="1.5s" fill="freeze"/>
+          </path>
+          
+          <!-- Direction arrows -->
+          <polygon points="350,160 360,155 360,165" fill="#00ffcc" opacity="0.8">
+            <animateTransform attributeName="transform" type="translate" 
+                              values="0,0; 20,0; 0,0" dur="2s" repeatCount="indefinite"/>
+          </polygon>
+          
+          <!-- Car -->
+          <rect width="12" height="8" fill="#ff4444" rx="2">
+            <animateMotion dur="3s" repeatCount="indefinite">
+              <mpath href="#carPath"/>
+            </animateMotion>
+          </rect>
+          <path id="carPath" d="M 30 160 Q 90 160 90 100 Q 170 100 170 160 Q 250 160 250 100 Q 370 100 370 160" fill="none"/>
+          
+          <!-- Surface badge -->
+          <rect x="10" y="250" width="80" height="25" fill="#2a4858" rx="3"/>
+          <text x="15" y="267" font-family="Arial" font-size="12" fill="#ffffff">🏁 Asfalto</text>
+        </svg>
+      `;
     }
-    if (slug.includes('brake')) {
-      // Airbrake: Discesa ripida con frenata improvvisa
-      return "M 20 30 L 200 200 Q 300 250 580 250";
+    
+    if (slug === 'backwards-driving') {
+      // Backwards Driving: Straight track with reverse arrows
+      return `
+        <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <defs>
+            <linearGradient id="asphalt3" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#2a2a2a"/>
+              <stop offset="100%" style="stop-color:#1a1a1a"/>
+            </linearGradient>
+            <linearGradient id="trajectory" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#ffff00"/>
+              <stop offset="100%" style="stop-color:#ff9900"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          <rect width="400" height="280" fill="#1a1a1a"/>
+          
+          <!-- Straight track -->
+          <rect x="20" y="120" width="360" height="40" fill="url(#asphalt3)" stroke="#ffffff" stroke-width="2" rx="5"/>
+          
+          <!-- Backwards trajectory (right to left) -->
+          <path d="M 370 140 L 30 140" 
+                fill="none" stroke="url(#trajectory)" stroke-width="4" 
+                stroke-dasharray="340" stroke-dashoffset="340"
+                filter="url(#glow)">
+            <animate attributeName="stroke-dashoffset" from="340" to="0" dur="1.5s" fill="freeze"/>
+          </path>
+          
+          <!-- Reverse direction arrows -->
+          <polygon points="50,140 40,135 40,145" fill="#ffff00" opacity="0.8">
+            <animateTransform attributeName="transform" type="translate" 
+                              values="0,0; -20,0; 0,0" dur="2s" repeatCount="indefinite"/>
+          </polygon>
+          
+          <!-- Car going backwards -->
+          <rect width="12" height="8" fill="#ff4444" rx="2">
+            <animateMotion dur="3s" repeatCount="indefinite" rotate="auto">
+              <mpath href="#carPath"/>
+            </animateMotion>
+          </rect>
+          <path id="carPath" d="M 370 140 L 30 140" fill="none"/>
+          
+          <!-- Surface badge -->
+          <rect x="10" y="250" width="80" height="25" fill="#2a4858" rx="3"/>
+          <text x="15" y="267" font-family="Arial" font-size="12" fill="#ffffff">🏁 Asfalto</text>
+        </svg>
+      `;
     }
-    if (slug === 'gear-management' || slug.includes('speed') || slug === 'wallride') {
-      // Speed/Wallride: Rettilineo veloce con piccole ondulazioni
-      return "M 20 150 L 150 145 L 300 155 L 450 145 L 580 150";
+    
+    if (slug === 'air-brake-roll') {
+      // Air Brake Roll: Jump with landing
+      return `
+        <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <defs>
+            <linearGradient id="air" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#3a1a4a"/>
+              <stop offset="100%" style="stop-color:#1a0a2a"/>
+            </linearGradient>
+            <linearGradient id="trajectory" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#00ccff"/>
+              <stop offset="100%" style="stop-color:#0066ff"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          <rect width="400" height="280" fill="#0a0a2a"/>
+          
+          <!-- Takeoff ramp -->
+          <polygon points="20,180 120,180 120,140 20,140" fill="url(#air)" stroke="#ffffff" stroke-width="2"/>
+          <!-- Landing ramp -->
+          <polygon points="280,180 380,180 380,140 280,140" fill="url(#air)" stroke="#ffffff" stroke-width="2"/>
+          
+          <!-- Jump trajectory -->
+          <path d="M 30 160 Q 200 60 370 160" 
+                fill="none" stroke="url(#trajectory)" stroke-width="4" 
+                stroke-dasharray="400" stroke-dashoffset="400"
+                filter="url(#glow)">
+            <animate attributeName="stroke-dashoffset" from="400" to="0" dur="1.5s" fill="freeze"/>
+          </path>
+          
+          <!-- Air brake effect (dotted line during jump) -->
+          <path d="M 120 140 Q 200 60 280 140" 
+                fill="none" stroke="#ffffff" stroke-width="2" 
+                stroke-dasharray="5,5" opacity="0.5"/>
+          
+          <!-- Direction arrows -->
+          <polygon points="350,160 360,155 360,165" fill="#00ccff" opacity="0.8">
+            <animateTransform attributeName="transform" type="translate" 
+                              values="0,0; 20,0; 0,0" dur="2s" repeatCount="indefinite"/>
+          </polygon>
+          
+          <!-- Car -->
+          <rect width="12" height="8" fill="#ff4444" rx="2">
+            <animateMotion dur="3s" repeatCount="indefinite">
+              <mpath href="#carPath"/>
+            </animateMotion>
+          </rect>
+          <path id="carPath" d="M 30 160 Q 200 60 370 160" fill="none"/>
+          
+          <!-- Surface badge -->
+          <rect x="10" y="250" width="80" height="25" fill="#3a1a4a" rx="3"/>
+          <text x="15" y="267" font-family="Arial" font-size="12" fill="#ffffff">✈️ Aria</text>
+        </svg>
+      `;
     }
+    
+    if (slug === 'wallride') {
+      // Wallride: Vertical wall section
+      return `
+        <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <defs>
+            <linearGradient id="wall" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#4a4a4a"/>
+              <stop offset="50%" style="stop-color:#6a6a6a"/>
+              <stop offset="100%" style="stop-color:#4a4a4a"/>
+            </linearGradient>
+            <linearGradient id="trajectory" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#ff00ff"/>
+              <stop offset="100%" style="stop-color:#ff8800"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          <rect width="400" height="280" fill="#2a2a2a"/>
+          
+          <!-- Ground track -->
+          <rect x="20" y="180" width="100" height="40" fill="url(#asphalt)" stroke="#ffffff" stroke-width="2" rx="5"/>
+          <rect x="280" y="180" width="100" height="40" fill="url(#asphalt)" stroke="#ffffff" stroke-width="2" rx="5"/>
+          
+          <!-- Wall -->
+          <rect x="120" y="40" width="160" height="180" fill="url(#wall)" stroke="#ffffff" stroke-width="2"/>
+          
+          <!-- Wallride trajectory -->
+          <path d="M 30 200 L 120 200 L 120 60 L 280 60 L 280 200 L 370 200" 
+                fill="none" stroke="url(#trajectory)" stroke-width="4" 
+                stroke-dasharray="450" stroke-dashoffset="450"
+                filter="url(#glow)">
+            <animate attributeName="stroke-dashoffset" from="450" to="0" dur="1.5s" fill="freeze"/>
+          </path>
+          
+          <!-- Direction arrows -->
+          <polygon points="350,200 360,195 360,205" fill="#ff00ff" opacity="0.8">
+            <animateTransform attributeName="transform" type="translate" 
+                              values="0,0; 20,0; 0,0" dur="2s" repeatCount="indefinite"/>
+          </polygon>
+          
+          <!-- Car -->
+          <rect width="12" height="8" fill="#ff4444" rx="2">
+            <animateMotion dur="3s" repeatCount="indefinite">
+              <mpath href="#carPath"/>
+            </animateMotion>
+          </rect>
+          <path id="carPath" d="M 30 200 L 120 200 L 120 60 L 280 60 L 280 200 L 370 200" fill="none"/>
+          
+          <!-- Surface badge -->
+          <rect x="10" y="250" width="80" height="25" fill="#4a4a4a" rx="3"/>
+          <text x="15" y="267" font-family="Arial" font-size="12" fill="#ffffff">🧗 Pareti</text>
+        </svg>
+      `;
+    }
+    
     if (slug === 'scoot') {
-      // Hopper: Rimbalzi ripetuti e progressivi
-      return "M 20 250 Q 50 180 80 250 Q 110 180 140 250 Q 170 180 200 250 Q 230 180 260 250 Q 290 180 320 250 Q 350 180 380 250 Q 410 180 440 250 Q 470 180 500 250 Q 530 180 560 250 Q 580 200";
+      // Scoot: Transition with wiggle pattern
+      return `
+        <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <defs>
+            <linearGradient id="dirt2" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#4a3a1a"/>
+              <stop offset="100%" style="stop-color:#2a1a0a"/>
+            </linearGradient>
+            <linearGradient id="grass" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#2d5a2d"/>
+              <stop offset="100%" style="stop-color:#1a3a1a"/>
+            </linearGradient>
+            <linearGradient id="trajectory" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#00ff00"/>
+              <stop offset="50%" style="stop-color:#ffff00"/>
+              <stop offset="100%" style="stop-color:#00ff00"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          <rect width="400" height="280" fill="#1a2a1a"/>
+          
+          <!-- Dirt section -->
+          <rect x="20" y="120" width="180" height="40" fill="url(#dirt2)" stroke="#8b6914" stroke-width="2" rx="5"/>
+          <!-- Grass section -->
+          <rect x="200" y="120" width="180" height="40" fill="url(#grass)" stroke="#2d5a2d" stroke-width="2" rx="5"/>
+          
+          <!-- Scoot trajectory (wiggle at transition) -->
+          <path d="M 30 140 L 180 140 L 185 130 L 195 150 L 205 130 L 215 150 L 220 140 L 370 140" 
+                fill="none" stroke="url(#trajectory)" stroke-width="4" 
+                stroke-dasharray="400" stroke-dashoffset="400"
+                filter="url(#glow)">
+            <animate attributeName="stroke-dashoffset" from="400" to="0" dur="1.5s" fill="freeze"/>
+          </path>
+          
+          <!-- Direction arrows -->
+          <polygon points="350,140 360,135 360,145" fill="#00ff00" opacity="0.8">
+            <animateTransform attributeName="transform" type="translate" 
+                              values="0,0; 20,0; 0,0" dur="2s" repeatCount="indefinite"/>
+          </polygon>
+          
+          <!-- Car -->
+          <rect width="12" height="8" fill="#ff4444" rx="2">
+            <animateMotion dur="3s" repeatCount="indefinite">
+              <mpath href="#carPath"/>
+            </animateMotion>
+          </rect>
+          <path id="carPath" d="M 30 140 L 180 140 L 185 130 L 195 150 L 205 130 L 215 150 L 220 140 L 370 140" fill="none"/>
+          
+          <!-- Surface badge -->
+          <rect x="10" y="250" width="100" height="25" fill="#2a4a2a" rx="3"/>
+          <text x="15" y="267" font-family="Arial" font-size="12" fill="#ffffff">🌱 Transizioni</text>
+        </svg>
+      `;
     }
-    // Default path
-    return "M 20 200 Q 300 50 580 200";
-  };
-
-  const path = getPathData();
-
-  return (
-    <div className="trajectory-svg-wrapper" style={{ background: '#001a33', borderRadius: '12px', padding: '20px', border: '1px solid rgba(255,255,255,0.1)' }}>
-      <svg viewBox="0 0 600 300" style={{ width: '100%', height: 'auto' }}>
+    
+    if (slug === 'superdive') {
+      // Superdive: Steep descent
+      return `
+        <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <defs>
+            <linearGradient id="descent" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#4a4a2a"/>
+              <stop offset="100%" style="stop-color:#2a2a1a"/>
+            </linearGradient>
+            <linearGradient id="trajectory" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#ff6600"/>
+              <stop offset="100%" style="stop-color:#ffcc00"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          <rect width="400" height="280" fill="#2a2a1a"/>
+          
+          <!-- Descent track (diagonal) -->
+          <path d="M 20 80 L 380 220 L 380 260 L 20 120 Z" 
+                fill="url(#descent)" stroke="#ffffff" stroke-width="2"/>
+          
+          <!-- Superdive trajectory (steep diagonal) -->
+          <path d="M 30 100 L 370 240" 
+                fill="none" stroke="url(#trajectory)" stroke-width="4" 
+                stroke-dasharray="400" stroke-dashoffset="400"
+                filter="url(#glow)">
+            <animate attributeName="stroke-dashoffset" from="400" to="0" dur="1.5s" fill="freeze"/>
+          </path>
+          
+          <!-- Speed boost effect -->
+          <circle cx="200" cy="170" r="15" fill="none" stroke="#ff6600" stroke-width="2" opacity="0.5">
+            <animate attributeName="r" values="15;25;15" dur="1s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.5;0.2;0.5" dur="1s" repeatCount="indefinite"/>
+          </circle>
+          
+          <!-- Direction arrows -->
+          <polygon points="350,240 360,235 360,245" fill="#ff6600" opacity="0.8">
+            <animateTransform attributeName="transform" type="translate" 
+                              values="0,0; 20,0; 0,0" dur="2s" repeatCount="indefinite"/>
+          </polygon>
+          
+          <!-- Car -->
+          <rect width="12" height="8" fill="#ff4444" rx="2">
+            <animateMotion dur="3s" repeatCount="indefinite">
+              <mpath href="#carPath"/>
+            </animateMotion>
+          </rect>
+          <path id="carPath" d="M 30 100 L 370 240" fill="none"/>
+          
+          <!-- Surface badge -->
+          <rect x="10" y="250" width="80" height="25" fill="#4a4a2a" rx="3"/>
+          <text x="15" y="267" font-family="Arial" font-size="12" fill="#ffffff">📉 Discese</text>
+        </svg>
+      `;
+    }
+    
+    if (slug === 'ice-drift') {
+      // Ice Drift: Ice track with wide drift
+      return `
+        <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <defs>
+            <linearGradient id="ice" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#a8d8ea"/>
+              <stop offset="100%" style="stop-color:#0d1f2d"/>
+            </linearGradient>
+            <linearGradient id="trajectory" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#00ccff"/>
+              <stop offset="100%" style="stop-color:#ffffff"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          <rect width="400" height="280" fill="#0d1f2d"/>
+          
+          <!-- Ice track (very wide curve) -->
+          <path d="M 20 140 Q 200 140 380 60 L 380 120 Q 200 200 20 200 Z" 
+                fill="url(#ice)" stroke="#a8d8ea" stroke-width="2"/>
+          
+          <!-- Ice reflections -->
+          <ellipse cx="100" cy="170" rx="30" ry="5" fill="#ffffff" opacity="0.2"/>
+          <ellipse cx="300" cy="90" rx="25" ry="4" fill="#ffffff" opacity="0.2"/>
+          
+          <!-- Ice drift trajectory (very wide) -->
+          <path d="M 30 180 Q 200 180 370 80" 
+                fill="none" stroke="url(#trajectory)" stroke-width="4" 
+                stroke-dasharray="400" stroke-dashoffset="400"
+                filter="url(#glow)">
+            <animate attributeName="stroke-dashoffset" from="400" to="0" dur="1.5s" fill="freeze"/>
+          </path>
+          
+          <!-- Direction arrows -->
+          <polygon points="350,80 360,75 360,85" fill="#00ccff" opacity="0.8">
+            <animateTransform attributeName="transform" type="translate" 
+                              values="0,0; 20,0; 0,0" dur="2s" repeatCount="indefinite"/>
+          </polygon>
+          
+          <!-- Car -->
+          <rect width="12" height="8" fill="#ff4444" rx="2">
+            <animateMotion dur="3s" repeatCount="indefinite">
+              <mpath href="#carPath"/>
+            </animateMotion>
+          </rect>
+          <path id="carPath" d="M 30 180 Q 200 180 370 80" fill="none"/>
+          
+          <!-- Surface badge -->
+          <rect x="10" y="250" width="80" height="25" fill="#1a3a52" rx="3"/>
+          <text x="15" y="267" font-family="Arial" font-size="12" fill="#ffffff">🧊 Ghiaccio</text>
+        </svg>
+      `;
+    }
+    
+    if (slug === 'road-drift') {
+      // Road Drift: Basic curve on asphalt
+      return `
+        <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <defs>
+            <linearGradient id="asphalt4" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#2a2a2a"/>
+              <stop offset="100%" style="stop-color:#1a1a1a"/>
+            </linearGradient>
+            <linearGradient id="trajectory" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#00ff00"/>
+              <stop offset="100%" style="stop-color:#00cc66"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          <rect width="400" height="280" fill="#1a1a1a"/>
+          
+          <!-- Basic curve track -->
+          <path d="M 20 140 Q 200 140 200 80 T 380 80
+                   L 380 120 Q 200 120 200 180 T 20 180 Z" 
+                fill="url(#asphalt4)" stroke="#ffffff" stroke-width="2"/>
+          
+          <!-- Road drift trajectory -->
+          <path d="M 30 160 Q 150 160 150 100 Q 250 100 370 100" 
+                fill="none" stroke="url(#trajectory)" stroke-width="4" 
+                stroke-dasharray="350" stroke-dashoffset="350"
+                filter="url(#glow)">
+            <animate attributeName="stroke-dashoffset" from="350" to="0" dur="1.5s" fill="freeze"/>
+          </path>
+          
+          <!-- Direction arrows -->
+          <polygon points="350,100 360,95 360,105" fill="#00ff00" opacity="0.8">
+            <animateTransform attributeName="transform" type="translate" 
+                              values="0,0; 20,0; 0,0" dur="2s" repeatCount="indefinite"/>
+          </polygon>
+          
+          <!-- Car -->
+          <rect width="12" height="8" fill="#ff4444" rx="2">
+            <animateMotion dur="3s" repeatCount="indefinite">
+              <mpath href="#carPath"/>
+            </animateMotion>
+          </rect>
+          <path id="carPath" d="M 30 160 Q 150 160 150 100 Q 250 100 370 100" fill="none"/>
+          
+          <!-- Surface badge -->
+          <rect x="10" y="250" width="80" height="25" fill="#2a4858" rx="3"/>
+          <text x="15" y="267" font-family="Arial" font-size="12" fill="#ffffff">🏁 Asfalto</text>
+        </svg>
+      `;
+    }
+    
+    if (slug === 'gear-management') {
+      // Gear Management: Straight track with speed indicators
+      return `
+        <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <defs>
+            <linearGradient id="asphalt5" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#2a2a2a"/>
+              <stop offset="100%" style="stop-color:#1a1a1a"/>
+            </linearGradient>
+            <linearGradient id="trajectory" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#ff00ff"/>
+              <stop offset="100%" style="stop-color:#ffaa00"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          <rect width="400" height="280" fill="#1a1a1a"/>
+          
+          <!-- Straight track -->
+          <rect x="20" y="120" width="360" height="40" fill="url(#asphalt5)" stroke="#ffffff" stroke-width="2" rx="5"/>
+          
+          <!-- Gear shift indicators -->
+          <circle cx="100" cy="140" r="8" fill="none" stroke="#ff00ff" stroke-width="2" opacity="0.6"/>
+          <circle cx="200" cy="140" r="8" fill="none" stroke="#ff00ff" stroke-width="2" opacity="0.6"/>
+          <circle cx="300" cy="140" r="8" fill="none" stroke="#ff00ff" stroke-width="2" opacity="0.6"/>
+          
+          <!-- Gear management trajectory -->
+          <path d="M 30 140 L 370 140" 
+                fill="none" stroke="url(#trajectory)" stroke-width="4" 
+                stroke-dasharray="340" stroke-dashoffset="340"
+                filter="url(#glow)">
+            <animate attributeName="stroke-dashoffset" from="340" to="0" dur="1.5s" fill="freeze"/>
+          </path>
+          
+          <!-- Direction arrows -->
+          <polygon points="350,140 360,135 360,145" fill="#ff00ff" opacity="0.8">
+            <animateTransform attributeName="transform" type="translate" 
+                              values="0,0; 20,0; 0,0" dur="2s" repeatCount="indefinite"/>
+          </polygon>
+          
+          <!-- Car -->
+          <rect width="12" height="8" fill="#ff4444" rx="2">
+            <animateMotion dur="3s" repeatCount="indefinite">
+              <mpath href="#carPath"/>
+            </animateMotion>
+          </rect>
+          <path id="carPath" d="M 30 140 L 370 140" fill="none"/>
+          
+          <!-- Surface badge -->
+          <rect x="10" y="250" width="80" height="25" fill="#2a4858" rx="3"/>
+          <text x="15" y="267" font-family="Arial" font-size="12" fill="#ffffff">🏁 Asfalto</text>
+        </svg>
+      `;
+    }
+    
+    // Default SVG
+    return `
+      <svg viewBox="0 0 400 280" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
         <defs>
-          <linearGradient id="grad-path" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#0099ff" />
-            <stop offset="100%" stopColor="#FF6600" />
+          <linearGradient id="default" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#2a2a2a"/>
+            <stop offset="100%" style="stop-color:#1a1a1a"/>
           </linearGradient>
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0,102,204,0.15)" strokeWidth="1"/>
-          </pattern>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
         </defs>
         
-        {/* Grid Background */}
-        <rect width="600" height="300" fill="url(#grid)" />
+        <rect width="400" height="280" fill="#1a1a1a"/>
+        <rect x="20" y="120" width="360" height="40" fill="url(#default)" stroke="#ffffff" stroke-width="2" rx="5"/>
         
-        {/* Ideal Path (Shadow/Reference) */}
-        <path 
-          d={path} 
-          fill="none" 
-          stroke="rgba(255,255,255,0.05)" 
-          strokeWidth="40" 
-          strokeLinecap="round" 
-        />
+        <path d="M 30 140 L 370 140" 
+              fill="none" stroke="#00ff88" stroke-width="4" 
+              stroke-dasharray="340" stroke-dashoffset="340"
+              filter="url(#glow)">
+          <animate attributeName="stroke-dashoffset" from="340" to="0" dur="1.5s" fill="freeze"/>
+        </path>
         
-        {/* Technique Line */}
-        <path 
-          d={path} 
-          fill="none" 
-          stroke="url(#grad-path)" 
-          strokeWidth="4" 
-          strokeLinecap="round"
-          strokeDasharray={slug.includes('drift') || slug === 'bug-slide' ? "10,5" : "0"}
-        />
-
-        {/* Direction Arrows along the path (simplified) */}
-        <circle cx="50" cy="150" r="4" fill="#0099ff" visibility={slug === 'speed-slide' ? 'hidden' : 'visible'} />
-        <circle cx="550" cy="150" r="4" fill="#FF6600" />
+        <polygon points="350,140 360,135 360,145" fill="#00ff88" opacity="0.8"/>
         
-        <text x="10" y="290" fill="#0099ff" style={{ fontSize: '10px', fontWeight: 'bold' }}>TRAIETTORIA IDEALE</text>
-        <text x="150" y="290" fill="#FF6600" style={{ fontSize: '10px', fontWeight: 'bold' }}>TECNICA APPLICATA</text>
+        <rect width="12" height="8" fill="#ff4444" rx="2">
+          <animateMotion dur="3s" repeatCount="indefinite">
+            <mpath href="#defaultCarPath"/>
+          </animateMotion>
+        </rect>
+        <path id="defaultCarPath" d="M 30 140 L 370 140" fill="none"/>
+        
+        <rect x="10" y="250" width="80" height="25" fill="#2a2a2a" rx="3"/>
+        <text x="15" y="267" font-family="Arial" font-size="12" fill="#ffffff">🏁 Pista</text>
       </svg>
-    </div>
+    `;
+  };
+
+  return (
+    <div 
+      className="trajectory-svg-wrapper" 
+      style={{ 
+        background: '#000000', 
+        borderRadius: '12px', 
+        padding: '20px', 
+        border: '2px solid rgba(255,255,255,0.1)',
+        overflow: 'hidden'
+      }}
+      dangerouslySetInnerHTML={{ __html: getTrackSVG() }}
+    />
   );
 }
 
