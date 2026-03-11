@@ -37,32 +37,32 @@ function TrajectorySVG({ technique }) {
   // Define unique SVG paths for each movement type
   const getPathData = () => {
     if (slug.includes('drift')) {
-      // Drift: Curve lunga con scivolata
-      return "M 20 150 Q 150 150 250 80 T 480 80";
+      // Drift: Curva lunga con scivolata laterale fluida
+      return "M 20 180 Q 100 180 180 120 T 380 80 Q 480 60 580 80";
     }
     if (slug === 'speed-slide') {
-      // Speedslide: Curva stretta compressa
-      return "M 20 100 C 150 100 150 250 300 250 S 450 100 580 100";
+      // Speedslide: Curva stretta con traiettoria compressa e rapida
+      return "M 20 100 C 80 100 120 200 200 200 S 320 100 400 100 S 520 100 580 100";
     }
     if (slug === 'bug-slide' || slug.includes('neoslide')) {
-      // Neoslide/Bug-slide: Doppio cambio direzione
-      return "M 20 150 L 150 150 L 150 50 L 300 50 L 300 250 L 450 250 L 580 150";
+      // Neoslide/Bug-slide: Doppio cambio direzione angolare
+      return "M 20 150 L 120 150 L 120 60 L 250 60 L 250 240 L 380 240 L 380 150 L 580 150";
     }
     if (slug === 'superdive' || slug.includes('jump')) {
-      // Salto/Jump: Arco in aria
-      return "M 20 280 Q 300 20 580 280";
+      // Salto/Jump: Arco verticale pronunciato in aria
+      return "M 20 280 Q 150 50 300 20 Q 450 50 580 280";
     }
     if (slug.includes('brake')) {
-      // Airbrake: Discesa ripida
-      return "M 20 50 L 250 250 L 580 250";
+      // Airbrake: Discesa ripida con frenata improvvisa
+      return "M 20 30 L 200 200 Q 300 250 580 250";
     }
     if (slug === 'gear-management' || slug.includes('speed') || slug === 'wallride') {
-      // Speed/Wallride: Rettilineo veloce
-      return "M 20 150 L 580 150";
+      // Speed/Wallride: Rettilineo veloce con piccole ondulazioni
+      return "M 20 150 L 150 145 L 300 155 L 450 145 L 580 150";
     }
     if (slug === 'scoot') {
-      // Hopper: Rimbalzi ripetuti
-      return "M 20 250 Q 70 150 120 250 Q 170 150 220 250 Q 270 150 320 250 Q 370 150 420 250 Q 470 150 520 250 Q 570 150 590 250";
+      // Hopper: Rimbalzi ripetuti e progressivi
+      return "M 20 250 Q 50 180 80 250 Q 110 180 140 250 Q 170 180 200 250 Q 230 180 260 250 Q 290 180 320 250 Q 350 180 380 250 Q 410 180 440 250 Q 470 180 500 250 Q 530 180 560 250 Q 580 200";
     }
     // Default path
     return "M 20 200 Q 300 50 580 200";
@@ -359,11 +359,21 @@ export default function TechniquePage() {
         <TrajectorySVG technique={technique} />
         <div className="surface-indicator" style={{ marginTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>Superficie:</span>
-          <span className="tc-badge badge-surface" style={{ fontSize: '1rem', padding: '0.4rem 1rem' }}>
+          <span className="tc-badge badge-surface" style={{ 
+            fontSize: '1rem', 
+            padding: '0.4rem 1rem',
+            background: technique.surface.includes('Asfalto') ? '#2a4858' :
+                        technique.surface.includes('Ghiaccio') ? '#1a3a52' :
+                        technique.surface.includes('Erba') ? '#1a4a2a' :
+                        technique.surface.includes('Sabbia') || technique.surface.includes('Dirt') ? '#4a3a1a' :
+                        technique.surface.includes('Aria') ? '#3a1a4a' : '#2a2a3a'
+          }}>
             {technique.surface.includes('Asfalto') ? '🏁 ' : 
              technique.surface.includes('Ghiaccio') ? '🧊 ' : 
              technique.surface.includes('Erba') ? '🌱 ' : 
-             technique.surface.includes('Sabbia') || technique.surface.includes('Dirt') ? '🏖️ ' : '🛸 '}
+             technique.surface.includes('Sabbia') || technique.surface.includes('Dirt') ? '🏖️ ' : 
+             technique.surface.includes('Aria') ? '✈️ ' :
+             technique.surface.includes('Pareti') ? '🧗 ' : '🛸 '}
             {technique.surface}
           </span>
         </div>
