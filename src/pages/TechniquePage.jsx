@@ -35,215 +35,162 @@ function TrajectorySVG({ technique }) {
   const slug = technique?.slug || '';
   const surface = technique?.surface || 'Qualsiasi';
   
-  // Define minimal clean track layouts for each technique
+  // Define simple geometric track layouts for each technique
   const getTrackSVG = () => {
     if (slug === 'speed-slide') {
-      // Speed Slide: Long gentle curve
+      // Speed Slide: L-shape curve (two rectangles)
       return `
-        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
           <defs>
-            <linearGradient id="traj" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#00ff88"/>
-              <stop offset="100%" style="stop-color:#0088ff"/>
-            </linearGradient>
             <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
+              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff8800"/>
             </filter>
           </defs>
           
-          <rect width="400" height="220" fill="#0d0d0d" rx="8"/>
+          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
           
-          <!-- Track -->
-          <path d="M 30 80 Q 200 80 370 50 L 370 90 Q 200 120 30 120 Z" 
-                fill="#3a3a3a" stroke="#ffffff" stroke-width="1"/>
+          <!-- L-shape track -->
+          <rect x="30" y="40" width="200" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
+          <rect x="190" y="40" width="40" height="120" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
           
           <!-- Trajectory -->
-          <path d="M 40 90 Q 200 90 360 60" 
-                fill="none" stroke="url(#traj)" stroke-width="4" 
-                stroke-dasharray="350" stroke-dashoffset="350"
+          <path d="M 50 60 L 200 60 L 200 140" 
+                fill="none" stroke="#ff8800" stroke-width="3" 
+                stroke-dasharray="200" stroke-dashoffset="200"
                 filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="350" to="0" dur="1.5s" fill="freeze"/>
+            <animate attributeName="stroke-dashoffset" from="200" to="0" dur="2s" fill="freeze"/>
           </path>
           
-          <!-- Arrow -->
-          <polygon points="350,60 360,55 360,65" fill="#00ff88"/>
-          
           <!-- Badge -->
-          <rect x="15" y="190" width="70" height="20" fill="#222" rx="3"/>
-          <text x="20" y="204" font-family="Arial" font-size="11" fill="#ffffff">🏁 Asfalto</text>
+          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
+          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🏁 Asfalto</text>
         </svg>
       `;
     }
     
     if (slug === 'bug-slide') {
-      // Bug Slide: Sharp 90° turn
+      // Bug Slide: Sharp L-turn (two rectangles)
       return `
-        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
           <defs>
-            <linearGradient id="traj" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#ff6600"/>
-              <stop offset="100%" style="stop-color:#ff0066"/>
-            </linearGradient>
             <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
+              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffff00"/>
             </filter>
           </defs>
           
-          <rect width="400" height="220" fill="#0d0d0d" rx="8"/>
+          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
           
-          <!-- Track -->
-          <rect x="30" y="80" width="140" height="30" fill="#3a2010" stroke="#8b6914" stroke-width="1" rx="3"/>
-          <rect x="150" y="110" width="220" height="30" fill="#3a2010" stroke="#8b6914" stroke-width="1" rx="3"/>
+          <!-- L-shape track -->
+          <rect x="30" y="80" width="150" height="40" fill="#3a2010" stroke="#7a5020" stroke-width="1" rx="20"/>
+          <rect x="140" y="80" width="40" height="80" fill="#3a2010" stroke="#7a5020" stroke-width="1" rx="20"/>
           
           <!-- Trajectory -->
-          <path d="M 40 95 L 160 95 L 160 125 L 360 125" 
-                fill="none" stroke="url(#traj)" stroke-width="4" 
-                stroke-dasharray="350" stroke-dashoffset="350"
+          <path d="M 50 100 L 160 100 L 160 140" 
+                fill="none" stroke="#ffff00" stroke-width="3" 
+                stroke-dasharray="150" stroke-dashoffset="150"
                 filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="350" to="0" dur="1.5s" fill="freeze"/>
+            <animate attributeName="stroke-dashoffset" from="150" to="0" dur="2s" fill="freeze"/>
           </path>
           
-          <!-- Arrow -->
-          <polygon points="350,125 360,120 360,130" fill="#ff6600"/>
-          
           <!-- Badge -->
-          <rect x="15" y="190" width="60" height="20" fill="#222" rx="3"/>
-          <text x="20" y="204" font-family="Arial" font-size="11" fill="#ffffff">🏖️ Dirt</text>
+          <rect x="15" y="170" width="60" height="20" fill="#111" rx="3"/>
+          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🏖️ Dirt</text>
         </svg>
       `;
     }
     
     if (slug === 'double-drift') {
-      // Double Drift: S-curve
+      // Double Drift: S-curve (three rectangles zigzag)
       return `
-        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
           <defs>
-            <linearGradient id="traj" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#00ffcc"/>
-              <stop offset="50%" style="stop-color:#ff00ff"/>
-              <stop offset="100%" style="stop-color:#00ffcc"/>
-            </linearGradient>
             <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
+              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff00ff"/>
             </filter>
           </defs>
           
-          <rect width="400" height="220" fill="#0d0d0d" rx="8"/>
+          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
           
-          <!-- S-curve track -->
-          <path d="M 30 110 Q 80 110 80 70 Q 80 30 130 30 Q 180 30 180 70 Q 180 110 230 110 Q 280 110 280 70 Q 280 30 330 30 Q 380 30 380 70
-                   L 380 90 Q 330 90 280 130 Q 230 130 180 90 Q 180 50 130 50 Q 80 50 80 90 Q 80 130 30 130 Z" 
-                fill="#3a3a3a" stroke="#ffffff" stroke-width="1"/>
+          <!-- S-curve track (three rectangles) -->
+          <rect x="30" y="40" width="100" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
+          <rect x="80" y="80" width="100" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
+          <rect x="130" y="120" width="220" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
           
           <!-- Trajectory -->
-          <path d="M 40 120 Q 70 120 70 80 Q 70 40 120 40 Q 170 40 170 80 Q 170 120 220 120 Q 270 120 270 80 Q 270 40 320 40 Q 370 40 370 80" 
-                fill="none" stroke="url(#traj)" stroke-width="4" 
-                stroke-dasharray="400" stroke-dashoffset="400"
+          <path d="M 50 60 L 110 60 L 110 100 L 170 100 L 170 140 L 330 140" 
+                fill="none" stroke="#ff00ff" stroke-width="3" 
+                stroke-dasharray="300" stroke-dashoffset="300"
                 filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="400" to="0" dur="1.5s" fill="freeze"/>
+            <animate attributeName="stroke-dashoffset" from="300" to="0" dur="2s" fill="freeze"/>
           </path>
           
-          <!-- Arrow -->
-          <polygon points="360,80 370,75 370,85" fill="#00ffcc"/>
-          
           <!-- Badge -->
-          <rect x="15" y="190" width="70" height="20" fill="#222" rx="3"/>
-          <text x="20" y="204" font-family="Arial" font-size="11" fill="#ffffff">🏁 Asfalto</text>
+          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
+          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🏁 Asfalto</text>
         </svg>
       `;
     }
     
     if (slug === 'backwards-driving') {
-      // Backwards Driving: Straight track (reverse)
+      // Backwards Driving: Straight track (one rectangle)
       return `
-        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
           <defs>
-            <linearGradient id="traj" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#ffff00"/>
-              <stop offset="100%" style="stop-color:#ff9900"/>
-            </linearGradient>
             <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
+              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff8800"/>
             </filter>
           </defs>
           
-          <rect width="400" height="220" fill="#0d0d0d" rx="8"/>
+          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
           
-          <!-- Track -->
-          <rect x="30" y="95" width="340" height="30" fill="#3a3a3a" stroke="#ffffff" stroke-width="1" rx="3"/>
+          <!-- Straight track -->
+          <rect x="30" y="80" width="320" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
           
           <!-- Trajectory (right to left) -->
-          <path d="M 360 110 L 40 110" 
-                fill="none" stroke="url(#traj)" stroke-width="4" 
-                stroke-dasharray="320" stroke-dashoffset="320"
+          <path d="M 330 100 L 50 100" 
+                fill="none" stroke="#ff8800" stroke-width="3" 
+                stroke-dasharray="280" stroke-dashoffset="280"
                 filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="320" to="0" dur="1.5s" fill="freeze"/>
+            <animate attributeName="stroke-dashoffset" from="280" to="0" dur="2s" fill="freeze"/>
           </path>
           
-          <!-- Reverse arrow -->
-          <polygon points="50,110 40,105 40,115" fill="#ffff00"/>
-          
           <!-- Badge -->
-          <rect x="15" y="190" width="70" height="20" fill="#222" rx="3"/>
-          <text x="20" y="204" font-family="Arial" font-size="11" fill="#ffffff">🏁 Asfalto</text>
+          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
+          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🏁 Asfalto</text>
         </svg>
       `;
     }
     
     if (slug === 'air-brake-roll') {
-      // Air Brake Roll: Jump ramp
+      // Air Brake Roll: Jump ramp (rectangle + triangle)
       return `
-        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
           <defs>
-            <linearGradient id="traj" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#00ccff"/>
-              <stop offset="100%" style="stop-color:#0066ff"/>
-            </linearGradient>
             <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
+              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00ccff"/>
             </filter>
           </defs>
           
-          <rect width="400" height="220" fill="#0d0d0d" rx="8"/>
+          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
           
-          <!-- Ramps -->
-          <polygon points="30,140 130,140 130,100 30,100" fill="#0a1428" stroke="#5ab4d4" stroke-width="1"/>
-          <polygon points="270,140 370,140 370,100 270,100" fill="#0a1428" stroke="#5ab4d4" stroke-width="1"/>
+          <!-- Landing track -->
+          <rect x="30" y="100" width="120" height="40" fill="#0a2030" stroke="#4a90b0" stroke-width="1" rx="20"/>
+          <!-- Jump ramp (triangle) -->
+          <polygon points="150,100 230,100 190,60" fill="#0a2030" stroke="#4a90b0" stroke-width="1"/>
+          <!-- Landing track -->
+          <rect x="230" y="100" width="120" height="40" fill="#0a2030" stroke="#4a90b0" stroke-width="1" rx="20"/>
           
           <!-- Trajectory -->
-          <path d="M 40 120 Q 200 40 360 120" 
-                fill="none" stroke="url(#traj)" stroke-width="4" 
-                stroke-dasharray="350" stroke-dashoffset="350"
+          <path d="M 50 120 Q 190 40 330 120" 
+                fill="none" stroke="#00ccff" stroke-width="3" 
+                stroke-dasharray="300" stroke-dashoffset="300"
                 filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="350" to="0" dur="1.5s" fill="freeze"/>
+            <animate attributeName="stroke-dashoffset" from="300" to="0" dur="2s" fill="freeze"/>
           </path>
           
-          <!-- Arrow -->
-          <polygon points="350,120 360,115 360,125" fill="#00ccff"/>
-          
           <!-- Badge -->
-          <rect x="15" y="190" width="60" height="20" fill="#222" rx="3"/>
-          <text x="20" y="204" font-family="Arial" font-size="11" fill="#ffffff">✈️ Aria</text>
+          <rect x="15" y="170" width="60" height="20" fill="#111" rx="3"/>
+          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">✈️ Aria</text>
         </svg>
       `;
     }
@@ -251,296 +198,212 @@ function TrajectorySVG({ technique }) {
     if (slug === 'wallride') {
       // Wallride: L-shape with vertical wall
       return `
-        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
           <defs>
-            <linearGradient id="traj" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#ff00ff"/>
-              <stop offset="100%" style="stop-color:#ff8800"/>
-            </linearGradient>
             <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
+              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff8800"/>
             </filter>
           </defs>
           
-          <rect width="400" height="220" fill="#0d0d0d" rx="8"/>
+          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
           
           <!-- Ground tracks -->
-          <rect x="30" y="150" width="90" height="25" fill="#3a3a3a" stroke="#ffffff" stroke-width="1" rx="3"/>
-          <rect x="280" y="150" width="90" height="25" fill="#3a3a3a" stroke="#ffffff" stroke-width="1" rx="3"/>
-          
-          <!-- Wall -->
-          <rect x="120" y="40" width="160" height="135" fill="#4a4a4a" stroke="#ffffff" stroke-width="1"/>
+          <rect x="30" y="150" width="80" height="30" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
+          <rect x="270" y="150" width="80" height="30" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
+          <!-- Wall (vertical rectangle) -->
+          <rect x="110" y="30" width="40" height="120" fill="#4a4a4a" stroke="#666" stroke-width="1" rx="20"/>
           
           <!-- Trajectory -->
-          <path d="M 40 162 L 120 162 L 120 60 L 280 60 L 280 162 L 360 162" 
-                fill="none" stroke="url(#traj)" stroke-width="4" 
-                stroke-dasharray="380" stroke-dashoffset="380"
+          <path d="M 50 165 L 110 165 L 110 60 L 150 60 L 150 165 L 310 165" 
+                fill="none" stroke="#ff8800" stroke-width="3" 
+                stroke-dasharray="250" stroke-dashoffset="250"
                 filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="380" to="0" dur="1.5s" fill="freeze"/>
+            <animate attributeName="stroke-dashoffset" from="250" to="0" dur="2s" fill="freeze"/>
           </path>
           
-          <!-- Arrow -->
-          <polygon points="350,162 360,157 360,167" fill="#ff00ff"/>
-          
           <!-- Badge -->
-          <rect x="15" y="190" width="70" height="20" fill="#222" rx="3"/>
-          <text x="20" y="204" font-family="Arial" font-size="11" fill="#ffffff">🧗 Pareti</text>
+          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
+          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🧗 Pareti</text>
         </svg>
       `;
     }
     
     if (slug === 'scoot') {
-      // Scoot: Transition with wiggle
+      // Scoot: Transition (two rectangles)
       return `
-        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
           <defs>
-            <linearGradient id="traj" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#00ff00"/>
-              <stop offset="50%" style="stop-color:#ffff00"/>
-              <stop offset="100%" style="stop-color:#00ff00"/>
-            </linearGradient>
             <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
+              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00ff00"/>
             </filter>
           </defs>
           
-          <rect width="400" height="220" fill="#0d0d0d" rx="8"/>
+          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
           
           <!-- Dirt section -->
-          <rect x="30" y="95" width="170" height="30" fill="#3a2010" stroke="#8b6914" stroke-width="1" rx="3"/>
+          <rect x="30" y="80" width="160" height="40" fill="#3a2010" stroke="#7a5020" stroke-width="1" rx="20"/>
           <!-- Grass section -->
-          <rect x="200" y="95" width="170" height="30" fill="#1e3a1e" stroke="#4a7a4a" stroke-width="1" rx="3"/>
+          <rect x="190" y="80" width="160" height="40" fill="#1a3a1a" stroke="#3a6a3a" stroke-width="1" rx="20"/>
           
           <!-- Trajectory -->
-          <path d="M 40 110 L 190 110 L 195 100 L 205 120 L 215 100 L 225 120 L 230 110 L 360 110" 
-                fill="none" stroke="url(#traj)" stroke-width="4" 
-                stroke-dasharray="350" stroke-dashoffset="350"
+          <path d="M 50 100 L 350 100" 
+                fill="none" stroke="#00ff00" stroke-width="3" 
+                stroke-dasharray="300" stroke-dashoffset="300"
                 filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="350" to="0" dur="1.5s" fill="freeze"/>
+            <animate attributeName="stroke-dashoffset" from="300" to="0" dur="2s" fill="freeze"/>
           </path>
           
-          <!-- Arrow -->
-          <polygon points="350,110 360,105 360,115" fill="#00ff00"/>
-          
           <!-- Badge -->
-          <rect x="15" y="190" width="80" height="20" fill="#222" rx="3"/>
-          <text x="20" y="204" font-family="Arial" font-size="11" fill="#ffffff">🌱 Transizioni</text>
+          <rect x="15" y="170" width="80" height="20" fill="#111" rx="3"/>
+          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🌱 Transizioni</text>
         </svg>
       `;
     }
     
     if (slug === 'superdive') {
-      // Superdive: Diagonal descent
+      // Superdive: Diagonal descent (rectangle)
       return `
-        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
           <defs>
-            <linearGradient id="traj" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#ff6600"/>
-              <stop offset="100%" style="stop-color:#ffcc00"/>
-            </linearGradient>
             <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
+              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffff00"/>
             </filter>
           </defs>
           
-          <rect width="400" height="220" fill="#0d0d0d" rx="8"/>
+          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
           
           <!-- Diagonal track -->
-          <path d="M 30 60 L 370 160 L 370 180 L 30 80 Z" 
-                fill="#3a3a3a" stroke="#ffffff" stroke-width="1"/>
+          <rect x="30" y="40" width="320" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20" 
+                transform="rotate(-15 190 60)"/>
           
           <!-- Trajectory -->
-          <path d="M 40 70 L 360 170" 
-                fill="none" stroke="url(#traj)" stroke-width="4" 
-                stroke-dasharray="350" stroke-dashoffset="350"
+          <path d="M 50 60 L 330 120" 
+                fill="none" stroke="#ffff00" stroke-width="3" 
+                stroke-dasharray="300" stroke-dashoffset="300"
                 filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="350" to="0" dur="1.5s" fill="freeze"/>
+            <animate attributeName="stroke-dashoffset" from="300" to="0" dur="2s" fill="freeze"/>
           </path>
           
-          <!-- Arrow -->
-          <polygon points="350,170 360,165 360,175" fill="#ff6600"/>
-          
           <!-- Badge -->
-          <rect x="15" y="190" width="70" height="20" fill="#222" rx="3"/>
-          <text x="20" y="204" font-family="Arial" font-size="11" fill="#ffffff">📉 Discese</text>
+          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
+          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">📉 Discese</text>
         </svg>
       `;
     }
     
     if (slug === 'ice-drift') {
-      // Ice Drift: Wide curve on ice
+      // Ice Drift: Wide curve (L-shape)
       return `
-        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
           <defs>
-            <linearGradient id="traj" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#00ccff"/>
-              <stop offset="100%" style="stop-color:#ffffff"/>
-            </linearGradient>
             <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
+              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00ccff"/>
             </filter>
           </defs>
           
-          <rect width="400" height="220" fill="#0d0d0d" rx="8"/>
+          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
           
-          <!-- Ice track (wide curve) -->
-          <path d="M 30 110 Q 200 110 370 50 L 370 90 Q 200 150 30 150 Z" 
-                fill="#0d2030" stroke="#5ab4d4" stroke-width="1"/>
+          <!-- L-shape ice track -->
+          <rect x="30" y="40" width="200" height="50" fill="#0a2030" stroke="#4a90b0" stroke-width="1" rx="20"/>
+          <rect x="180" y="40" width="50" height="120" fill="#0a2030" stroke="#4a90b0" stroke-width="1" rx="20"/>
           
           <!-- Trajectory -->
-          <path d="M 40 140 Q 200 140 360 60" 
-                fill="none" stroke="url(#traj)" stroke-width="4" 
-                stroke-dasharray="350" stroke-dashoffset="350"
+          <path d="M 50 65 L 200 65 L 200 140" 
+                fill="none" stroke="#00ccff" stroke-width="3" 
+                stroke-dasharray="200" stroke-dashoffset="200"
                 filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="350" to="0" dur="1.5s" fill="freeze"/>
+            <animate attributeName="stroke-dashoffset" from="200" to="0" dur="2s" fill="freeze"/>
           </path>
           
-          <!-- Arrow -->
-          <polygon points="350,60 360,55 360,65" fill="#00ccff"/>
-          
           <!-- Badge -->
-          <rect x="15" y="190" width="70" height="20" fill="#222" rx="3"/>
-          <text x="20" y="204" font-family="Arial" font-size="11" fill="#ffffff">🧊 Ghiaccio</text>
+          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
+          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🧊 Ghiaccio</text>
         </svg>
       `;
     }
     
     if (slug === 'road-drift') {
-      // Road Drift: Simple curve
+      // Road Drift: Simple curve (L-shape)
       return `
-        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
           <defs>
-            <linearGradient id="traj" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#00ff00"/>
-              <stop offset="100%" style="stop-color:#00cc66"/>
-            </linearGradient>
             <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
+              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00ff00"/>
             </filter>
           </defs>
           
-          <rect width="400" height="220" fill="#0d0d0d" rx="8"/>
+          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
           
-          <!-- Simple curve track -->
-          <path d="M 30 110 Q 150 110 150 70 Q 150 30 250 30 Q 350 30 370 70
-                   L 370 90 Q 350 50 250 50 Q 150 50 150 90 Q 150 130 30 130 Z" 
-                fill="#3a3a3a" stroke="#ffffff" stroke-width="1"/>
+          <!-- Simple L-shape curve -->
+          <rect x="30" y="60" width="150" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
+          <rect x="140" y="60" width="40" height="80" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
           
           <!-- Trajectory -->
-          <path d="M 40 120 Q 130 120 130 80 Q 130 40 230 40 Q 330 40 360 80" 
-                fill="none" stroke="url(#traj)" stroke-width="4" 
-                stroke-dasharray="350" stroke-dashoffset="350"
+          <path d="M 50 80 L 160 80 L 160 120" 
+                fill="none" stroke="#00ff00" stroke-width="3" 
+                stroke-dasharray="150" stroke-dashoffset="150"
                 filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="350" to="0" dur="1.5s" fill="freeze"/>
+            <animate attributeName="stroke-dashoffset" from="150" to="0" dur="2s" fill="freeze"/>
           </path>
           
-          <!-- Arrow -->
-          <polygon points="350,80 360,75 360,85" fill="#00ff00"/>
-          
           <!-- Badge -->
-          <rect x="15" y="190" width="70" height="20" fill="#222" rx="3"/>
-          <text x="20" y="204" font-family="Arial" font-size="11" fill="#ffffff">🏁 Asfalto</text>
+          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
+          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🏁 Asfalto</text>
         </svg>
       `;
     }
     
     if (slug === 'gear-management') {
-      // Gear Management: Straight track with indicators
+      // Gear Management: Straight track (one rectangle)
       return `
-        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
           <defs>
-            <linearGradient id="traj" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#ff00ff"/>
-              <stop offset="100%" style="stop-color:#ffaa00"/>
-            </linearGradient>
             <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
+              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff8800"/>
             </filter>
           </defs>
           
-          <rect width="400" height="220" fill="#0d0d0d" rx="8"/>
+          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
           
           <!-- Straight track -->
-          <rect x="30" y="95" width="340" height="30" fill="#3a3a3a" stroke="#ffffff" stroke-width="1" rx="3"/>
-          
-          <!-- Gear indicators -->
-          <circle cx="100" cy="110" r="6" fill="none" stroke="#ff00ff" stroke-width="2" opacity="0.6"/>
-          <circle cx="200" cy="110" r="6" fill="none" stroke="#ff00ff" stroke-width="2" opacity="0.6"/>
-          <circle cx="300" cy="110" r="6" fill="none" stroke="#ff00ff" stroke-width="2" opacity="0.6"/>
+          <rect x="30" y="80" width="320" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
           
           <!-- Trajectory -->
-          <path d="M 40 110 L 360 110" 
-                fill="none" stroke="url(#traj)" stroke-width="4" 
-                stroke-dasharray="320" stroke-dashoffset="320"
+          <path d="M 50 100 L 330 100" 
+                fill="none" stroke="#ff8800" stroke-width="3" 
+                stroke-dasharray="280" stroke-dashoffset="280"
                 filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="320" to="0" dur="1.5s" fill="freeze"/>
+            <animate attributeName="stroke-dashoffset" from="280" to="0" dur="2s" fill="freeze"/>
           </path>
           
-          <!-- Arrow -->
-          <polygon points="350,110 360,105 360,115" fill="#ff00ff"/>
-          
           <!-- Badge -->
-          <rect x="15" y="190" width="70" height="20" fill="#222" rx="3"/>
-          <text x="20" y="204" font-family="Arial" font-size="11" fill="#ffffff">🏁 Asfalto</text>
+          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
+          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🏁 Asfalto</text>
         </svg>
       `;
     }
     
     // Default SVG
     return `
-      <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+      <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
         <defs>
-          <linearGradient id="traj" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" style="stop-color:#00ff88"/>
-            <stop offset="100%" style="stop-color:#0088ff"/>
-          </linearGradient>
           <filter id="glow">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-            <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
+            <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff8800"/>
           </filter>
         </defs>
         
-        <rect width="400" height="220" fill="#0d0d0d" rx="8"/>
-        <rect x="30" y="95" width="340" height="30" fill="#3a3a3a" stroke="#ffffff" stroke-width="1" rx="3"/>
+        <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
+        <rect x="30" y="80" width="320" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
         
-        <path d="M 40 110 L 360 110" 
-              fill="none" stroke="url(#traj)" stroke-width="4" 
-              stroke-dasharray="320" stroke-dashoffset="320"
+        <path d="M 50 100 L 330 100" 
+              fill="none" stroke="#ff8800" stroke-width="3" 
+              stroke-dasharray="280" stroke-dashoffset="280"
               filter="url(#glow)">
-          <animate attributeName="stroke-dashoffset" from="320" to="0" dur="1.5s" fill="freeze"/>
+          <animate attributeName="stroke-dashoffset" from="280" to="0" dur="2s" fill="freeze"/>
         </path>
         
-        <polygon points="350,110 360,105 360,115" fill="#00ff88"/>
-        
-        <rect x="15" y="190" width="60" height="20" fill="#222" rx="3"/>
-        <text x="20" y="204" font-family="Arial" font-size="11" fill="#ffffff">🏁 Pista</text>
+        <rect x="15" y="170" width="60" height="20" fill="#111" rx="3"/>
+        <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🏁 Pista</text>
       </svg>
     `;
   };
@@ -758,6 +621,7 @@ export default function TechniquePage() {
 
       {/* RECENT GAMEPLAY SCREENSHOT */}
       <div className="section-block">
+        <h2>🎮 Gameplay</h2>
         <div className="real-screenshot-container">
           <img 
             src={technique.imageUrl} 
