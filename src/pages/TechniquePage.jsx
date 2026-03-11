@@ -31,100 +31,88 @@ function ScreenshotPlaceholder({ label, colors }) {
   );
 }
 
-function TrajectoryCanvas({ technique }) {
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const W = canvas.width;
-    const H = canvas.height;
-
-    ctx.clearRect(0, 0, W, H);
-
-    // Background
-    ctx.fillStyle = '#001a33';
-    ctx.fillRect(0, 0, W, H);
-
-    // Grid
-    ctx.strokeStyle = 'rgba(0,102,204,0.15)';
-    ctx.lineWidth = 1;
-    for (let x = 0; x < W; x += 40) {
-      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+function TrajectorySVG({ technique }) {
+  const slug = technique?.slug || '';
+  
+  // Define unique SVG paths for each movement type
+  const getPathData = () => {
+    if (slug.includes('drift')) {
+      // Drift: Curve lunga con scivolata
+      return "M 20 150 Q 150 150 250 80 T 480 80";
     }
-    for (let y = 0; y < H; y += 40) {
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    if (slug === 'speed-slide') {
+      // Speedslide: Curva stretta compressa
+      return "M 20 100 C 150 100 150 250 300 250 S 450 100 580 100";
     }
-
-    // Track border
-    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-    ctx.lineWidth = 30;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-
-    // Adjust path per technique type
-    const paths = {
-      'bug-slide': [[60,120],[180,120],[280,80],[380,80],[460,130],[500,200],[460,260],[380,280],[280,280]],
-      'double-drift': [[40,160],[160,160],[220,100],[300,100],[360,160],[420,220],[500,220],[560,160]],
-      'ice-drift': [[40,200],[140,200],[260,140],[360,200],[430,260],[530,200],[600,140]],
-      'wallride': [[40,80],[100,80],[200,200],[200,300],[300,300]],
-    };
-    const defaultPath = [[40,160],[150,160],[250,100],[380,100],[450,160],[480,240],[400,280],[280,280],[180,240]];
-    const pts = paths[technique?.slug] || defaultPath;
-
-    // Draw outer track area (wide stroke)
-    ctx.strokeStyle = 'rgba(30,60,100,0.6)';
-    ctx.lineWidth = 40;
-    ctx.beginPath();
-    ctx.moveTo(pts[0][0], pts[0][1]);
-    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
-    ctx.stroke();
-
-    // Ideal racing line
-    ctx.strokeStyle = '#0099ff';
-    ctx.lineWidth = 3;
-    ctx.setLineDash([]);
-    ctx.beginPath();
-    ctx.moveTo(pts[0][0], pts[0][1]);
-    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
-    ctx.stroke();
-
-    // Technique slide line
-    ctx.strokeStyle = '#FF6600';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([8, 6]);
-    const offset = 20;
-    ctx.beginPath();
-    ctx.moveTo(pts[0][0], pts[0][1] + offset);
-    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1] + offset * (i % 2 === 0 ? 1 : -1));
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    // Arrow markers
-    ctx.fillStyle = '#FF6600';
-    for (let i = 1; i < pts.length - 1; i += 2) {
-      const [x, y] = pts[i];
-      ctx.beginPath();
-      ctx.arc(x, y, 5, 0, Math.PI * 2);
-      ctx.fill();
+    if (slug === 'bug-slide' || slug.includes('neoslide')) {
+      // Neoslide/Bug-slide: Doppio cambio direzione
+      return "M 20 150 L 150 150 L 150 50 L 300 50 L 300 250 L 450 250 L 580 150";
     }
+    if (slug === 'superdive' || slug.includes('jump')) {
+      // Salto/Jump: Arco in aria
+      return "M 20 280 Q 300 20 580 280";
+    }
+    if (slug.includes('brake')) {
+      // Airbrake: Discesa ripida
+      return "M 20 50 L 250 250 L 580 250";
+    }
+    if (slug === 'gear-management' || slug.includes('speed') || slug === 'wallride') {
+      // Speed/Wallride: Rettilineo veloce
+      return "M 20 150 L 580 150";
+    }
+    if (slug === 'scoot') {
+      // Hopper: Rimbalzi ripetuti
+      return "M 20 250 Q 70 150 120 250 Q 170 150 220 250 Q 270 150 320 250 Q 370 150 420 250 Q 470 150 520 250 Q 570 150 590 250";
+    }
+    // Default path
+    return "M 20 200 Q 300 50 580 200";
+  };
 
-    // Labels
-    ctx.font = 'bold 11px Inter, sans-serif';
-    ctx.fillStyle = '#0099ff';
-    ctx.fillText('Traiettoria ideale', 10, H - 30);
-    ctx.fillStyle = '#FF6600';
-    ctx.fillText('Tecnica applicata', 10, H - 14);
-  }, [technique]);
+  const path = getPathData();
 
   return (
-    <canvas
-      ref={canvasRef}
-      width={640}
-      height={320}
-      className="trajectory-canvas"
-    />
+    <div className="trajectory-svg-wrapper" style={{ background: '#001a33', borderRadius: '12px', padding: '20px', border: '1px solid rgba(255,255,255,0.1)' }}>
+      <svg viewBox="0 0 600 300" style={{ width: '100%', height: 'auto' }}>
+        <defs>
+          <linearGradient id="grad-path" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#0099ff" />
+            <stop offset="100%" stopColor="#FF6600" />
+          </linearGradient>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0,102,204,0.15)" strokeWidth="1"/>
+          </pattern>
+        </defs>
+        
+        {/* Grid Background */}
+        <rect width="600" height="300" fill="url(#grid)" />
+        
+        {/* Ideal Path (Shadow/Reference) */}
+        <path 
+          d={path} 
+          fill="none" 
+          stroke="rgba(255,255,255,0.05)" 
+          strokeWidth="40" 
+          strokeLinecap="round" 
+        />
+        
+        {/* Technique Line */}
+        <path 
+          d={path} 
+          fill="none" 
+          stroke="url(#grad-path)" 
+          strokeWidth="4" 
+          strokeLinecap="round"
+          strokeDasharray={slug.includes('drift') || slug === 'bug-slide' ? "10,5" : "0"}
+        />
+
+        {/* Direction Arrows along the path (simplified) */}
+        <circle cx="50" cy="150" r="4" fill="#0099ff" visibility={slug === 'speed-slide' ? 'hidden' : 'visible'} />
+        <circle cx="550" cy="150" r="4" fill="#FF6600" />
+        
+        <text x="10" y="290" fill="#0099ff" style={{ fontSize: '10px', fontWeight: 'bold' }}>TRAIETTORIA IDEALE</text>
+        <text x="150" y="290" fill="#FF6600" style={{ fontSize: '10px', fontWeight: 'bold' }}>TECNICA APPLICATA</text>
+      </svg>
+    </div>
   );
 }
 
@@ -367,8 +355,18 @@ export default function TechniquePage() {
 
       {/* CANVAS TRAJECTORY */}
       <div className="section-block">
-        <h2>🗺️ Traiettoria sulla Pista</h2>
-        <TrajectoryCanvas technique={technique} />
+        <h2>🗺️ Traiettoria Ideale</h2>
+        <TrajectorySVG technique={technique} />
+        <div className="surface-indicator" style={{ marginTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>Superficie:</span>
+          <span className="tc-badge badge-surface" style={{ fontSize: '1rem', padding: '0.4rem 1rem' }}>
+            {technique.surface.includes('Asfalto') ? '🏁 ' : 
+             technique.surface.includes('Ghiaccio') ? '🧊 ' : 
+             technique.surface.includes('Erba') ? '🌱 ' : 
+             technique.surface.includes('Sabbia') || technique.surface.includes('Dirt') ? '🏖️ ' : '🛸 '}
+            {technique.surface}
+          </span>
+        </div>
       </div>
 
       {/* QUIZ */}

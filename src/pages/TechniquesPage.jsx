@@ -1,15 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { techniques } from '../data/techniques';
 
 export default function TechniquesPage() {
+  // Bug 1: Load filter from localStorage or default to 'Tutti'
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterDifficulty, setFilterDifficulty] = useState('All');
+  const [filterDifficulty, setFilterDifficulty] = useState(() => {
+    return localStorage.getItem('tm_tech_filter') || 'Tutti';
+  });
+
+  // Bug 1: Save filter to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('tm_tech_filter', filterDifficulty);
+  }, [filterDifficulty]);
 
   const filteredTechniques = techniques.filter((t) => {
     const matchesSearch = t.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           t.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesDifficulty = filterDifficulty === 'Tutti' || t.difficulty === filterDifficulty;
+    
+    // Bug 2: Ignore difficulty filter if search is active
+    const matchesDifficulty = searchTerm.length > 0 ? true : (filterDifficulty === 'Tutti' || t.difficulty === filterDifficulty);
+    
     return matchesSearch && matchesDifficulty;
   });
 

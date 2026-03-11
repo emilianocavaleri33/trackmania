@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { techniques } from '../data/techniques';
 
@@ -120,9 +121,9 @@ export default function ProfilePage() {
             }}
           >
             Nessun quiz completato ancora.{' '}
-            <a href="/tecniche" style={{ color: 'var(--accent-orange)' }}>
+            <Link to="/tecniche" style={{ color: 'var(--accent-orange)' }}>
               Inizia dalle tecniche →
-            </a>
+            </Link>
           </div>
         )}
       </div>
