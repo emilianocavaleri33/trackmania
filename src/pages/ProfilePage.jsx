@@ -54,8 +54,8 @@ export default function ProfilePage() {
       <div className="profile-header">
         <div className="profile-avatar">🏎️</div>
         <div className="profile-info">
-          <h2>TrackMania Pro</h2>
-          <p>Continua a completare i quiz per migliorare il tuo ranking!</p>
+          <h2>Campione TrackMania</h2>
+          <p>La tua scalata verso la maestria tecnica di TrackMania 2020.</p>
         </div>
       </div>
 
@@ -66,7 +66,7 @@ export default function ProfilePage() {
         </div>
         <div className="stat-card">
           <div className="stat-value">{avgScore}%</div>
-          <div className="stat-label">Score Medio</div>
+          <div className="stat-label">Risultato Medio</div>
         </div>
         <div className="stat-card">
           <div className="stat-value">{perfect}</div>

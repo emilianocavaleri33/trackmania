@@ -120,7 +120,7 @@ export default function MapsPage() {
   return (
     <div className="page-wrapper">
       <div className="section-header">
-        <h1>Training <span>Maps</span></h1>
+        <h1>Mappe <span>Training</span></h1>
         <p>Mappe training della community con codici di accesso — cercale nel Track Exchange di TM2020</p>
         <div className="section-divider" />
       </div>
@@ -131,7 +131,7 @@ export default function MapsPage() {
             <div className="map-card-header">
               <h3>{map.name}</h3>
               <div style={{ fontSize: '0.8rem', color: '#7fa0c0', marginTop: 4 }}>
-                by {map.author}
+                creata da {map.author}
               </div>
             </div>
             <div className="map-card-body">

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>NoSuchBucket</Code><Message>The specified bucket does not exist</Message><BucketName>trackmania-prod</BucketName><RequestId>ZC54X8F7Z5BW1JTR</RequestId><HostId>DykGyziw962nQL8R3AyB7lTz2MZ9ZBZ9S0o3n6e0vC+4Y/6IdGa7dwvbOd7wEJJTHjsQjigDS9PEiAeylO9K9oL/6fqjifXi</HostId></Error>

@@ -141,33 +141,87 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ─── HOMEPAGE ──────────────────────────────────────────── */
-.home-hero {
+/* ─── HERO BANNER ────────────────────────────────────────── */
+.hero-banner-new {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  background-image: url('https://sm.ign.com/t/ign_me/gallery/8/8-trackman/8-trackmania-gameplay-screenshots_qvfp.1400.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 3rem 0 2rem;
+  margin-bottom: 2rem;
 }
-.home-hero h1 {
+
+.hero-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+.hero-banner-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 0 2rem;
+}
+
+.hero-banner-content h1 {
   font-family: var(--font-heading);
-  font-size: 3.5rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #fff 0%, var(--accent-orange) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 5rem;
+  font-weight: 800;
+  color: #fff;
   margin-bottom: 1rem;
+  line-height: 1;
+  text-transform: uppercase;
 }
-.home-hero p {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  max-width: 600px;
+
+.hero-banner-content h1 span {
+  color: var(--accent-orange);
+}
+
+.hero-banner-content p {
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  line-height: 1.4;
+}
+
+.hero-banner-content .hero-badge {
+  background: rgba(255, 102, 0, 0.2);
+  color: var(--accent-orange);
+  padding: 0.5rem 1.5rem;
+  border-radius: 40px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  border: 1px solid rgba(255, 102, 0, 0.4);
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  backdrop-filter: blur(5px);
+}
+
+.hero-banner-content .hero-divider {
+  width: 100px;
+  height: 4px;
+  background: var(--accent-orange);
   margin: 0 auto;
+  border-radius: 2px;
 }
 
 .home-grid {
   display: grid;
-  grid-template-columns: repeat(2, 400px);
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
   gap: 2rem;
   justify-content: center;
   padding: 3rem 0;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 .home-card {
   width: 400px;
@@ -268,6 +322,84 @@ a { color: inherit; text-decoration: none; }
   background: linear-gradient(90deg, var(--accent-orange), transparent);
   margin: 1rem auto 0;
   border-radius: 2px;
+}
+
+/* ─── SEARCH & FILTER ───────────────────────────────────── */
+.search-filter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  align-items: center;
+}
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+}
+.search-icon {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  opacity: 0.6;
+}
+.search-input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 2px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1rem 1rem 1rem 3.5rem;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-orange);
+  box-shadow: 0 0 20px rgba(255,102,0,0.2);
+  background: var(--bg-card-hover);
+}
+.filter-group {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.filter-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.filter-btn:hover {
+  border-color: var(--accent-orange);
+  color: #fff;
+}
+.filter-btn.active {
+  background: var(--accent-orange);
+  border-color: var(--accent-orange);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(255,102,0,0.3);
+}
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--bg-card);
+  border-radius: 16px;
+  border: 1px dashed var(--border-subtle);
+  color: var(--text-muted);
 }
 
 /* ─── TECHNIQUES GRID ───────────────────────────────────── */
@@ -409,6 +541,25 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.95rem;
   line-height: 1.8;
   white-space: pre-line;
+}
+
+.real-screenshot-container {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: transform 0.3s;
+}
+
+.real-screenshot-container:hover {
+  transform: scale(1.01);
+}
+
+.tech-main-screenshot {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* CONTROLS TABLE */

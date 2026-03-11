@@ -310,7 +310,7 @@ export default function TechniquePage() {
         <h2>🎬 Tutorial Video</h2>
         <div className="video-container">
           <iframe
-            src={`https://www.youtube.com/embed/${technique.youtubeId}?rel=0&modestbranding=1`}
+            src={`https://www.youtube.com/embed/${technique.youtubeId}?rel=0&modestbranding=1&start=${technique.startTime || 0}`}
             title={`Tutorial: ${technique.name}`}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
@@ -322,6 +322,19 @@ export default function TechniquePage() {
       <div className="section-block">
         <h2>📖 Spiegazione Dettagliata</h2>
         <div className="description-text">{technique.description}</div>
+      </div>
+
+      {/* RECENT GAMEPLAY SCREENSHOT */}
+      <div className="section-block">
+        <h2>📸 Screenshot Gameplay Reale</h2>
+        <div className="real-screenshot-container">
+          <img 
+            src={technique.imageUrl} 
+            alt={`${technique.name} Screenshot`} 
+            className="tech-main-screenshot"
+            style={{ width: '100%', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }}
+          />
+        </div>
       </div>
 
       {/* CONTROLS TABLE */}
@@ -351,23 +364,6 @@ export default function TechniquePage() {
         </table>
       </div>
 
-      {/* SCREENSHOTS */}
-      <div className="section-block">
-        <h2>📸 Screenshot TrackMania 2020</h2>
-        <div className="screenshots-grid">
-          {SCREENSHOT_LABELS.map((label, i) => (
-            <ScreenshotPlaceholder
-              key={i}
-              label={`${technique.name} — ${label}`}
-              colors={[
-                `hsl(${200 + i * 20}, 80%, ${15 + i * 5}%)`,
-                `hsl(${220 + i * 15}, 90%, ${25 + i * 3}%)`,
-                `hsl(${210 + i * 10}, 70%, ${10 + i * 4}%)`,
-              ]}
-            />
-          ))}
-        </div>
-      </div>
 
       {/* CANVAS TRAJECTORY */}
       <div className="section-block">

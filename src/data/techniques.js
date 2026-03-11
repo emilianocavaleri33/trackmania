@@ -3,431 +3,303 @@ export const techniques = [
     id: "speed-slide",
     name: "Speed Slide",
     slug: "speed-slide",
-    emoji: "⚡",
-    minSpeed: "500+ km/h",
-    surface: "Any",
-    difficulty: "Intermediate",
-    youtubeId: "eCQUPQExtN4",
-    description: `The Speed Slide is one of the fundamental advanced techniques in TrackMania 2020, allowing drivers to maintain extraordinary momentum while cornering. Unlike traditional braking, this technique leverages the game's physics engine to transform kinetic energy into lateral drift while preserving forward velocity.\n\nTo execute a Speed Slide, you must first build up significant speed on a straight section of track—ideally above 500 km/h on road surfaces. As you approach a corner, instead of braking conventionally, you apply a sharp steering input combined with a brief tap of the brake. This creates a delicate balance between grip and slip conditions.\n\nThe key insight is that TrackMania 2020's physics model rewards precise inputs. Too much brake and you'll scrub all speed; too little and the car won't enter the slide. The optimal technique involves a 50-100ms brake tap synchronized exactly with your steering input. Experienced players describe this as "feeling" the rear of the car step out.\n\nOn the Xbox/PS controller, the analogue triggers give you granular control over brake intensity, making analog control actually easier than keyboard for this technique. PC players compensate by using very short key taps, often rebinding brake to a shoulder key for better timing.\n\nMastering the Speed Slide opens up entire new lines through corners, often shaving 2-5 seconds per lap compared to traditional braking approaches. It's the foundation upon which more complex techniques like Bug Slide and Double Drift are built.`,
+    emoji: "🏎️",
+    minSpeed: "400+ km/h",
+    surface: "Asfalto / Dirt",
+    difficulty: "Intermedio",
+    youtubeId: "w5eHQNp3hZc",
+    startTime: 430,
+    imageUrl: "https://sm.ign.com/t/ign_me/gallery/8/8-trackman/8-trackmania-gameplay-screenshots_qvfp.1400.jpg",
+    description: `Lo Speed Slide è la tecnica fondamentale per mantenere velocità nelle curve ampie. Quando superi i 400 km/h, sterzare troppo forte causa una perdita di accelerazione.
+    
+Invece di sterzare normalmente, devi iniziare una leggera derapata (drift) ma mantenerla molto sottile. Se vedi i segni delle gomme sovrapporsi, stai effettuando correttamente lo Speed Slide e guadagnerai velocità rispetto a chi sterza normalmente. È essenziale per le mappe Full Speed.`,
     controls: {
-      pc: "W + short S tap + A/D",
-      xbox: "RT hold + LT tap + Left Stick",
-      ps: "R2 hold + L2 tap + Left Stick",
+      pc: "W + breve tocco S + A/D",
+      xbox: "RT tieni + tocco LT + Stick Sinistro",
+      ps: "R2 tieni + tocco L2 + Stick Sinistro",
     },
     quiz: [
       {
-        q: "What is the minimum approximate speed for a Speed Slide on road surfaces?",
-        options: ["200 km/h", "350 km/h", "500 km/h", "800 km/h"],
+        q: "Qual è la velocità minima approssimativa per uno Speed Slide su asfalto?",
+        options: ["200 km/h", "300 km/h", "400 km/h", "600 km/h"],
         answer: 2,
       },
       {
-        q: "What is the key timing for the brake tap during a Speed Slide?",
-        options: ["1 full second", "50-100ms", "500ms", "No brake needed"],
-        answer: 1,
-      },
-      {
-        q: "Why do controller players sometimes find Speed Slide easier?",
-        options: ["Controllers have turbo buttons", "Analog triggers give granular brake control", "Controllers auto-drift", "Larger dead zones help"],
-        answer: 1,
-      },
-      {
-        q: "What time saving can a mastered Speed Slide give per lap?",
-        options: ["0.1-0.5 seconds", "1-2 seconds", "2-5 seconds", "10+ seconds"],
+        q: "Cosa succede se sterzi troppo senza effettuare lo Speed Slide?",
+        options: ["Guadagni velocità", "L'auto si ribalta", "Perdi accelerazione", "Si attiva il turbo"],
         answer: 2,
-      },
-      {
-        q: "Speed Slide is the foundation for which more complex technique?",
-        options: ["Wallride", "Scoot", "Bug Slide", "Air Brake Roll"],
-        answer: 2,
-      },
-    ],
+      }
+    ]
   },
   {
     id: "bug-slide",
     name: "Bug Slide",
     slug: "bug-slide",
-    emoji: "🎯",
-    minSpeed: "Post-jump landing",
-    surface: "Road",
-    difficulty: "Advanced",
-    youtubeId: "Kq6hgJyhAeI",
-    description: `The Bug Slide is the most iconic advanced technique in TrackMania 2020 and forms the backbone of top-level speedrunning. It exploits a specific interaction in the game's physics engine that occurs during the transition phase between airborne and grounded states.\n\nWhen your car lands after a jump, there is a brief window—typically 3-8 frames at 60fps—where the suspension is resettling and the game's grip model is recalculating. During this window, simultaneously pressing both accelerate and brake while applying steering creates a state where the car enters an ultra-low traction regime not normally accessible during standard driving.\n\nThe result is spectacular: instead of slowing down, the car maintains a high portion of its pre-landing speed while the rear wheels spin freely. Expert players can chain multiple landings to maintain this state across entire sections of track.\n\nThe proper input sequence on PC is: hold W (gas), then at the exact frame of landing impact, press S (brake) + steering direction simultaneously. The timing window is genuinely tight—most beginners need 10-20 hours of dedicated practice before achieving consistent execution.\n\nOn consoles, hold R2 fully, then on landing mash L2 + left stick simultaneously. Some pro players use hair-trigger locks on their controllers to reduce the travel distance on L2 for faster activation.\n\nWhat makes the Bug Slide special is that it completely changes how tracks are approached. Sections that seem to require braking can instead be Bug Slid through, fundamentally altering optimal racing lines.`,
+    emoji: "🐛",
+    minSpeed: "Dopo l'atterraggio",
+    surface: "Qualsiasi",
+    difficulty: "Avanzato",
+    youtubeId: "w5eHQNp3hZc",
+    startTime: 627,
+    imageUrl: "https://sm.ign.com/t/ign_me/screenshot/s/screenshot/screenshot-of-trackmania-2020_fgmr.1400.jpg",
+    description: `Il Bug Slide è una tecnica situazionale incredibile che ti permette di cambiare direzione quasi istantaneamente dopo un atterraggio o su superfici irregolari.
+    
+Per eseguirlo, devi atterrare con l'auto leggermente inclinata e frenare mentre sterzi. Il gioco "bugga" la trazione, permettendo all'auto di scivolare lateralmente mantenendo quasi tutto il momento lineare. È fondamentale per recuperare da errori o per traiettorie ultra-aggressive.`,
     controls: {
-      pc: "W + S simultaneously on landing + A/D",
-      xbox: "R2 + L2 simultaneously on landing + Stick",
-      ps: "R2 + L2 simultaneously on landing + Stick",
+      pc: "W + S simultaneamente all'atterraggio + A/D",
+      xbox: "R2 + L2 simultaneamente all'atterraggio + Stick",
+      ps: "R2 + L2 simultaneamente all'atterraggio + Stick",
     },
     quiz: [
       {
-        q: "When must the Bug Slide input be executed?",
-        options: ["Before the jump", "At the apex of the jump", "During the landing impact frame", "After full landing"],
+        q: "Quando deve essere eseguito l'input per il Bug Slide?",
+        options: ["Prima del salto", "Al picco del salto", "All'istante dell'impatto", "Dopo essersi fermati"],
         answer: 2,
-      },
-      {
-        q: "How long is the Bug Slide activation window at 60fps?",
-        options: ["0-2 frames", "3-8 frames", "20-30 frames", "1 full second"],
-        answer: 1,
-      },
-      {
-        q: "What modification do some pro controller players use for Bug Slide?",
-        options: ["Turbo pads", "Hair-trigger locks on L2", "Extended grips", "Paddle remapping"],
-        answer: 1,
-      },
-      {
-        q: "Approximately how many hours of practice do beginners typically need for consistent Bug Slides?",
-        options: ["1-2 hours", "5 hours", "10-20 hours", "100+ hours"],
-        answer: 2,
-      },
-      {
-        q: "What is the PRIMARY reason Bug Slide is important for speedrunning?",
-        options: ["It looks impressive", "It allows maintaining speed through sections that would normally require braking", "It's required by game rules", "It reduces car damage"],
-        answer: 1,
-      },
-    ],
+      }
+    ]
   },
   {
     id: "double-drift",
     name: "Double Drift",
     slug: "double-drift",
-    emoji: "🔄",
-    minSpeed: "300+ km/h",
-    surface: "Road/Dirt",
-    difficulty: "Advanced",
-    youtubeId: "40s98XOoW4w",
-    description: `The Double Drift is a chained technique where two consecutive drift maneuvers are linked together with minimal speed loss between them. It's particularly effective on S-curves and chicane sections where the track changes direction twice in quick succession.\n\nThe technique begins with a standard initiated drift into the first corner. The critical element is the transition: instead of letting the car straighten before entering the second corner, you flip the steering input while the car is still in its initial slide. This "flick" transfers the car's rotational momentum from one direction to the other.\n\nTiming the flick is everything. Too early and you'll spin out as the car hasn't built enough rotational inertia. Too late and you'll lose the drift state entirely and need to re-initiate. The sweet spot is approximately at the apex of the first corner, when the car's yaw rate is at maximum.\n\nOn PC, the keyboard inputs are W + (A or D) → flick to opposite direction at apex. On controller, the left stick flick needs to be decisive—halfway doesn't work. A 100% stick input in the new direction at the right moment is required.\n\nAdvanced players combine Double Drifts with brake feathering to control exit speed and line up for subsequent corners. At competitive level, Double Drift through a chicane can save 1-3 seconds compared to conventional two-corner braking approaches.\n\nPractice is best done on custom maps designed specifically for chicane training, available on the community track exchange with specific map codes.`,
+    emoji: "🔁",
+    minSpeed: "200+ km/h",
+    surface: "Asfalto",
+    difficulty: "Intermedio",
+    youtubeId: "1tkVQ2uL7Iw",
+    startTime: 810,
+    imageUrl: "https://sm.ign.com/t/ign_me/screenshot/s/screenshot/screenshot-of-trackmania-2020_vnfg.1400.jpg",
+    description: `Il Double Drift è una tecnica usata su asfalto per affrontare curve strette a S o per riposizionare l'auto durante una derapata prolungata.
+    
+Consiste nell'iniziare un drift, rilasciare brevemente lo sterzo e ricominciare a sterzare nella stessa direzione o in quella opposta senza mai staccare il gas. Questo permette di mantenere l'angolo di derapata ottimale senza che l'auto riprenda grip improvvisamente.`,
     controls: {
-      pc: "W + A/D → flick opposite at apex",
-      xbox: "RT + Stick left → flick right at apex",
-      ps: "R2 + Stick left → flick right at apex",
+      pc: "Mantenere W + Sterzare + Frenare (S), poi rilasciare e riprendere Sterzo",
+      xbox: "Mantenere RT + Sterzare + LT, poi rilasciare e riprendere Sterzo",
+      ps: "Mantenere R2 + Sterzare + L2, poi rilasciare e riprendere Sterzo",
     },
     quiz: [
       {
-        q: "When should you perform the steering flick in a Double Drift?",
-        options: ["At the entry of the first corner", "At the apex of the first corner", "At the exit of the first corner", "At the entry of the second corner"],
+        q: "Qual è il vantaggio principale del Double Drift?",
+        options: ["Raffredda le gomme", "Mantiene l'angolo di derapata senza riprendere grip", "Aumenta la velocità massima", "Permette di saltare più in alto"],
         answer: 1,
-      },
-      {
-        q: "What happens if you flick the steering too early?",
-        options: ["You gain extra speed", "The car goes straight", "You spin out", "Nothing changes"],
-        answer: 2,
-      },
-      {
-        q: "The Double Drift is especially effective on what type of track section?",
-        options: ["Long straights", "Hairpin bends", "S-curves and chicanes", "Vertical loops"],
-        answer: 2,
-      },
-      {
-        q: "How much of a stick input is needed for the controller flick?",
-        options: ["25%", "50%", "75%", "100%"],
-        answer: 3,
-      },
-      {
-        q: "Time saving of a mastered Double Drift through a chicane vs conventional approach?",
-        options: ["0.1-0.2 seconds", "0.5-1 second", "1-3 seconds", "5+ seconds"],
-        answer: 2,
-      },
-    ],
+      }
+    ]
   },
   {
     id: "backwards-driving",
-    name: "Backwards Driving",
+    name: "Guida in Retromarcia",
     slug: "backwards-driving",
-    emoji: "🔃",
-    minSpeed: "Any",
-    surface: "Any",
-    difficulty: "Beginner",
-    youtubeId: "eCQUPQExtN4",
-    description: `Backwards Driving in TrackMania 2020 is more than just reversing—it's a legitimate technique used to exploit gravity, slopes, and the physics system to reposition the car or maintain certain states that are otherwise inaccessible from a forward-facing position.\n\nThe most practical application of backwards driving is momentum recovery. If you crash, going into reverse and then rapidly switching to forward drive can sometimes preserve more speed than simply driving forward from a standstill. This is due to how TrackMania's tire physics model works differently in reverse.\n\nOn banked surfaces, backwards driving can allow you to access different grip zones and actually travel faster down certain slopes than forward driving would permit. Competitive players have found specific sections where brief backwards sections are genuinely faster.\n\nThe technique also underpins several "tech" shortcuts in community maps—spots where driving backwards through certain geometry triggers unexpected physics interactions that create shortcuts or speed boosts.\n\nFor training purposes, spending time driving tracks backwards is actually recommended by top players as it builds a deeper intuition for the physics model and track geometry. If you understand how a track works backwards, you understand it far more completely forwards.\n\nOn keyboard, use only the S/back key while steering. On controller, push left stick downward (reverse zone) while steering normally with the horizontal axis.`,
+    emoji: "🔙",
+    minSpeed: "Qualsiasi",
+    surface: "Qualsiasi",
+    difficulty: "Intermedio",
+    youtubeId: "w5eHQNp3hZc",
+    startTime: 492,
+    imageUrl: "https://sm.ign.com/t/ign_me/screenshot/s/screenshot/screenshot-of-trackmania-2020_4nxa.1400.jpg",
+    description: `In TrackMania 2020, alcune mappe sono progettate per essere percorse in retromarcia per mantenere il momento.
+    
+La fisica cambia: lo sterzo è invertito e l'accelerazione è più lenta, ma imparare a controllare l'auto a 300+ km/h all'indietro ti permette di non hittare il respawn in situazioni critiche.`,
     controls: {
-      pc: "S only + A/D for steering",
-      xbox: "Left Stick down-left/down-right",
-      ps: "Left Stick down-left/down-right",
+      pc: "Tieni S per accelerare all'indietro, W per frenare",
+      xbox: "Tieni LT per accelerare all'indietro, RT per frenare",
+      ps: "Tieni L2 per accelerare all'indietro, R2 per frenare",
     },
     quiz: [
       {
-        q: "What is the most practical competitive use of backwards driving?",
-        options: ["Confusing opponents", "Momentum recovery after crashes", "Finding shortcuts on official tracks", "Cooling down tires"],
+        q: "Cosa succede allo sterzo durante la guida in retromarcia?",
+        options: ["Resta uguale", "Viene invertito", "Si blocca", "Diventa più sensibile"],
         answer: 1,
-      },
-      {
-        q: "Backwards driving is recommended for training because it:",
-        options: ["Unlocks secret tracks", "Builds deeper intuition for physics and geometry", "Is required for certification", "Gives bonus XP"],
-        answer: 1,
-      },
-      {
-        q: "On banked surfaces, backwards driving can sometimes:",
-        options: ["Cause the car to flip", "Be genuinely faster than forward driving", "Slow you down dramatically", "Cause a penalty"],
-        answer: 1,
-      },
-      {
-        q: "On PC keyboard, how do you steer while driving backwards?",
-        options: ["Only left/right arrows", "Mouse only", "S + A or D", "Cannot steer backwards"],
-        answer: 2,
-      },
-      {
-        q: "Backwards tech shortcuts in community maps typically work by:",
-        options: ["Phase clipping", "Reversing through geometry that triggers physics interactions", "Activating hidden zones", "Speed hacking"],
-        answer: 1,
-      },
-    ],
+      }
+    ]
   },
   {
     id: "air-brake-roll",
     name: "Air Brake Roll",
     slug: "air-brake-roll",
-    emoji: "🌀",
-    minSpeed: "400+ km/h at launch",
-    surface: "Airborne",
-    difficulty: "Advanced",
-    youtubeId: "Kq6hgJyhAeI",
-    description: `The Air Brake Roll is a mid-air technique that uses the braking system to manipulate the car's rotation while airborne. In TrackMania 2020, braking while airborne does not slow the car's ground speed—instead, it interacts with the car's angular momentum, allowing skilled players to adjust pitch and roll during flight.\n\nThe technique is primarily used to control landing angle. When you launch off a ramp at high speed, your trajectory is set, but your landing orientation can be altered. By combining brake input with steering while airborne, you can pitch the nose down to ensure a flat landing (maximizing speed retention) or roll the car to land on a specific banking.\n\nAt very high speeds (400+ km/h launches), the landing angle difference between a perfect flat landing and a nose-down landing can result in a speed difference of 100+ km/h at the end of the receiving straight. This makes Air Brake Roll crucial on jump-heavy tracks.\n\nThe mechanics work because braking applies aerodynamic resistance unevenly when the car is rotated slightly—this creates a torque moment that players can exploit. It's a nuanced system that required deep community research to fully understand.\n\nPractical execution: on PC, use S + A/D mid-air. On controller, feather L2 while adjusting left stick direction. The intensity of the brake input determines how aggressively the car rotates, so analog control is beneficial here. Most players recommend starting on maps with large, forgiving jumps before practicing on technical sections.`,
+    emoji: "✈️",
+    minSpeed: "N/A",
+    surface: "Aria",
+    difficulty: "Avanzato",
+    youtubeId: "w5eHQNp3hZc",
+    startTime: 69,
+    imageUrl: "https://sm.ign.com/t/ign_me/screenshot/s/screenshot/screenshot-of-trackmania-2020_fgmr.1400.jpg",
+    description: `L'Air Brake Roll serve a controllare l'orientamento dell'auto durante i salti lunghi. Premendo il freno in aria, blocchi la rotazione dell'auto sull'asse del beccheggio.
+    
+Questo è vitale per atterrare perfettamente piatti su tutte e quattro le ruote. Se atterri inclinato, l'auto rimbalzerà o perderà accelerazione.`,
     controls: {
-      pc: "S (brake) + A/D mid-air",
-      xbox: "LT feather + Stick adjust mid-air",
-      ps: "L2 feather + Stick adjust mid-air",
+      pc: "Premi brevemente S (Freno) mentre sei in volo",
+      xbox: "Premi brevemente LT (Freno) mentre sei in volo",
+      ps: "Premi brevemente L2 (Freno) mentre sei in volo",
     },
     quiz: [
       {
-        q: "What does braking while airborne affect in TrackMania 2020?",
-        options: ["Ground speed only", "Nothing at all", "Car's angular momentum and rotation", "The jump trajectory"],
-        answer: 2,
-      },
-      {
-        q: "What is the primary use of Air Brake Roll?",
-        options: ["Increasing jump height", "Controlling landing angle", "Activating boosts", "Reducing air time"],
+        q: "Perché è importante l'Air Brake?",
+        options: ["Per andare più veloci in aria", "Per atterrare piatti e non perdere velocità", "Per fare punti acrobazia", "Per curvare meglio"],
         answer: 1,
-      },
-      {
-        q: "Speed loss from a bad landing angle vs perfect flat landing can be:",
-        options: ["0-10 km/h", "20-50 km/h", "100+ km/h", "Identical"],
-        answer: 2,
-      },
-      {
-        q: "Why is analog control better for Air Brake Roll on controller?",
-        options: ["Digital is disabled in air", "Feathering L2 gives granular rotation control", "Controllers have gyro sensors", "Analog gives turbo boost"],
-        answer: 1,
-      },
-      {
-        q: "Where should beginners practice Air Brake Roll first?",
-        options: ["Competition tracks", "Maps with large, forgiving jumps", "Underwater sections", "Vertical loops"],
-        answer: 1,
-      },
-    ],
+      }
+    ]
   },
   {
     id: "wallride",
     name: "Wallride",
     slug: "wallride",
-    emoji: "🧱",
+    emoji: "🧗",
     minSpeed: "250+ km/h",
-    surface: "Wall surfaces",
-    difficulty: "Intermediate",
-    youtubeId: "40s98XOoW4w",
-    description: `Wallriding in TrackMania 2020 is the technique of driving along vertical or near-vertical wall surfaces to navigate sections that would otherwise be inaccessible, or to take tighter racing lines that shave corners more aggressively than ground-based driving permits.\n\nThe physics of wallriding are governed by the game's surface collision model. When a car makes contact with a wall at a sufficient angle and speed, instead of bouncing off, the car's tires interface with the wall surface and generate enough downforce-equivalent grip to continue controlled driving. This is geometrically similar to how a ball stays in a half-pipe.\n\nThe minimum approach speed for reliable wallriding is approximately 250 km/h, though steeper walls require more speed. The approach angle is critical—too perpendicular and you'll bounce; too parallel and you won't grip. The optimal approach angle is 15-25 degrees from the wall surface.\n\nOn PC, steer into the wall from the approach and use counter-steering to stay on the surface. On controller, a gentle but consistent stick input toward the wall maintains contact. The challenge is that too much input pushes you off the top of the wall, while too little allows gravity to pull you away.\n\nWallriding opens up creative geometry on both official and community tracks. Track builders often design specific wallride sections that reward players who can execute the technique. Some tracks have hidden wallride shortcuts in unintended areas that the community has discovered through exploration.`,
+    surface: "Pareti",
+    difficulty: "Intermedio",
+    youtubeId: "w5eHQNp3hZc",
+    startTime: 223,
+    imageUrl: "https://sm.ign.com/t/ign_me/screenshot/s/screenshot/screenshot-of-trackmania-2020_v9a5.1400.jpg",
+    description: `Il Wallride ti permette di guidare su pareti verticali o molto inclinate. La chiave è la forza centrifuga: devi avere abbastanza velocità per 'incollarti' alla parete.
+    
+Entra nella parete con un angolo dolce, non colpirla frontalmente. Una volta su, cerca di mantenere una traiettoria dritta.`,
     controls: {
-      pc: "W + A/D toward wall → counter-steer to stay on surface",
-      xbox: "RT + Stick toward wall → slight counter input",
-      ps: "R2 + Stick toward wall → slight counter input",
+      pc: "Mantieni velocità elevata + Sterza leggermente verso la parete",
+      xbox: "Mantieni velocità elevata + Sterza (L) verso la parete",
+      ps: "Mantieni velocità elevata + Sterza (L) verso la parete",
     },
     quiz: [
       {
-        q: "What is the minimum speed for reliable wallriding?",
-        options: ["100 km/h", "150 km/h", "250 km/h", "400 km/h"],
-        answer: 2,
-      },
-      {
-        q: "What is the optimal approach angle to a wall for wallriding?",
-        options: ["0-5 degrees (parallel)", "15-25 degrees", "45-60 degrees", "90 degrees (perpendicular)"],
+        q: "Cosa ti tiene incollato alla parete durante un Wallride?",
+        options: ["La colla sulle gomme", "La forza centrifuga", "I magneti della pista", "Il vento"],
         answer: 1,
-      },
-      {
-        q: "What happens if you apply too much steering input during a wallride?",
-        options: ["You speed up", "You fall off the top of the wall", "You grip better", "You reverse on the wall"],
-        answer: 1,
-      },
-      {
-        q: "Wallriding physics work because:",
-        options: ["The game has magnets on walls", "The car generates grip similar to a half-pipe at sufficient speed/angle", "Wall friction is reduced to zero", "The car is weightless at high speed"],
-        answer: 1,
-      },
-      {
-        q: "Wallriding shortcuts in unintended areas of tracks are discovered through:",
-        options: ["Official announcements", "Community exploration", "Game tutorials", "Map editor revealed areas"],
-        answer: 1,
-      },
-    ],
+      }
+    ]
   },
   {
     id: "scoot",
     name: "Scoot",
     slug: "scoot",
-    emoji: "🚀",
-    minSpeed: "Activates from low speed",
-    surface: "Road",
-    difficulty: "Advanced",
-    youtubeId: "eCQUPQExtN4",
-    description: `The Scoot is a technique that exploits the transition between different surface grip levels to generate an unexpected burst of acceleration. TrackMania 2020 features multiple surface types (road, dirt, grass, ice) each with different traction coefficients, and the Scoot leverages the precise moment of crossing between them.\n\nWhen a car transitions from a low-grip surface (ice, dirt) to a high-grip surface (road), there is a brief computational moment where the physics engine recalculates grip forces. By applying specific inputs exactly at this transition point, players can cause the engine to miscalculate and apply more force than is physically appropriate—resulting in a significant speed boost beyond what normal acceleration would permit.\n\nThe window for Scoot execution is extremely tight: typically 2-4 frames at 60fps. This makes it one of the most technically demanding techniques to execute consistently. However, when performed correctly, a Scoot can add 20-60 km/h instantly.\n\nThe inputs vary based on the transition direction. Road-to-dirt Scoots use: hold gas, brief full-brake at the exact transition pixel, release brake. Dirt-to-road is similar but with a different timing offset. Most players develop feel for it through hundreds of repetitions rather than frame counting.\n\nThe Scoot fundamentally changed competitive play when discovered, opening entirely new routing possibilities. Some official tracks now have sections specifically favored by Scoots, and community map makers have created dedicated Scoot training maps.`,
+    emoji: "🛴",
+    minSpeed: "150+ km/h",
+    surface: "Transizioni",
+    difficulty: "Esperto",
+    youtubeId: "w5eHQNp3hZc",
+    startTime: 541,
+    imageUrl: "https://sm.ign.com/t/ign_me/screenshot/s/screenshot/screenshot-of-trackmania-2020_v9a5.1400.jpg",
+    description: `Lo Scoot (o Wiggle) è una tecnica avanzata per guadagnare accelerazione extra durante le transizioni di superficie.
+    
+Sterzando rapidamente a destra e sinistra proprio nel momento della transizione, forzi il motore fisico a darti una piccola spinta aggiuntiva. Richiede un timing al millesimo di secondo.`,
     controls: {
-      pc: "W + brief S tap at surface transition pixel",
-      xbox: "RT held + brief LT tap at exact transition",
-      ps: "R2 held + brief L2 tap at exact transition",
+      pc: "Sterzata rapida Sinistra-Destra (flick) sulla transizione",
+      xbox: "Flick rapido dello stick analogico sulla transizione",
+      ps: "Flick rapido dello stick analogico sulla transizione",
     },
     quiz: [
       {
-        q: "What does the Scoot technique exploit?",
-        options: ["Double jump feature", "Surface transition grip miscalculation", "Car weight distribution", "Turbo item zones"],
+        q: "In quale momento va eseguito lo Scoot?",
+        options: ["In pieno rettilineo", "Esattamente sulla transizione di superficie", "Durante un salto", "Prima di frenare"],
         answer: 1,
-      },
-      {
-        q: "How tight is the Scoot execution window at 60fps?",
-        options: ["10-20 frames", "5-10 frames", "2-4 frames", "1 frame"],
-        answer: 2,
-      },
-      {
-        q: "How much speed can a perfect Scoot add?",
-        options: ["1-5 km/h", "5-15 km/h", "20-60 km/h", "100+ km/h"],
-        answer: 2,
-      },
-      {
-        q: "How do most players learn Scoot timing?",
-        options: ["Frame counting software", "Tutorial videos only", "Through hundreds of repetitions building feel", "Auto-pilot mode"],
-        answer: 2,
-      },
-      {
-        q: "The Scoot input sequence is:",
-        options: ["Hold brake + release gas", "Hold gas + brief brake at transition", "Double tap gas", "Hold both gas and brake continuously"],
-        answer: 1,
-      },
-    ],
+      }
+    ]
   },
   {
     id: "superdive",
     name: "Superdive",
     slug: "superdive",
-    emoji: "⬇️",
-    minSpeed: "350+ km/h",
-    surface: "Slope transitions",
-    difficulty: "Advanced",
-    youtubeId: "Kq6hgJyhAeI",
-    description: `The Superdive is a technique where a car is deliberately nosed down on a slope or at the crest of a hill to gain significant speed through gravity assistance in a way that outperforms what the car's engine alone can provide. Unlike standard downhill driving, the Superdive involves a deliberate pitch input that maximizes the component of gravity acting in the direction of travel.\n\nAt the crest of a hill, there is a transition from uphill resistance to downhill assistance. Normally, cars carry some residual upward pitch inertia through this transition, briefly "floating" before gravity fully engages. The Superdive technique pitches the nose down aggressively at exactly the crest moment, eliminating this float phase and immediately engaging maximum gravitational assistance.\n\nThe speed gains are particularly impressive on steep tracks: a perfect Superdive can convert 2-4 seconds of gravitational potential energy into speed almost instantly, where a normal crest would spread that acceleration over 5-8 seconds.\n\nCombined with Air Brake Roll, the Superdive creates what top players call "the nose dive sequence"—pitching down to accelerate, then rolling to align for landing. This combination is standard practice on tracks with significant elevation changes.\n\nExecution: on PC, use S + slight forward pitch (if playing with mouse look enabled). On controller, push left stick forward (toward screen) while at the crest. The braking component helps nose the car down rather than slowing ground speed in this context.`,
+    emoji: "🌊",
+    minSpeed: "300+ km/h",
+    surface: "Discese",
+    difficulty: "Avanzato",
+    youtubeId: "w5eHQNp3hZc",
+    startTime: 593,
+    imageUrl: "https://sm.ign.com/t/ign_me/screenshot/s/screenshot/screenshot-of-trackmania-2020_m8cb.1400.jpg",
+    description: `Il Superdive è l'arte di massimizzare la velocità mentre si scende da una pendenza ripida. Inclinando l'auto verso il basso proprio mentre inizi la discesa, riduci il tempo in aria.
+    
+Ottieni una spinta gravitazionale immediata puntando il muso dell'auto verso il basso prima che le ruote perdano contatto con il terreno.`,
     controls: {
-      pc: "S + forward mouse pitch at crest",
-      xbox: "LT + Stick forward at hill crest",
-      ps: "L2 + Stick forward at hill crest",
+      pc: "Accelera (W) + Direziona il muso verso il basso sulla cresta",
+      xbox: "RT + Direziona il muso con stick analogico",
+      ps: "R2 + Direziona il muso con stick analogico",
     },
     quiz: [
       {
-        q: "What does the Superdive eliminate?",
-        options: ["Air resistance", "The float phase at hill crests", "Tire wear", "Gravity entirely"],
-        answer: 1,
-      },
-      {
-        q: "Superdive converts what into speed?",
-        options: ["Kinetic energy into heat", "Gravitational potential energy into speed", "Electrical energy", "Jump energy"],
-        answer: 1,
-      },
-      {
-        q: "When is the Superdive input applied?",
-        options: ["At the bottom of the hill", "On flat sections", "Exactly at the crest of the hill", "While airborne only"],
+        q: "Qual è lo scopo del Superdive?",
+        options: ["Andare sott'acqua", "Riferma l'auto", "Massimizzare la velocità gravitazionale in discesa", "Evitare le marce"],
         answer: 2,
-      },
-      {
-        q: "Superdive combined with Air Brake Roll creates what sequence?",
-        options: ["Double jump sequence", "The nose dive sequence", "The flat landing protocol", "Crest-to-drift"],
-        answer: 1,
-      },
-      {
-        q: "On a steep track, how quickly does a Superdive convert gravitational potential energy compared to normal driving?",
-        options: ["Same as normal", "Slower but more total speed", "Almost instantly vs 5-8 seconds normally", "Not at all on steep tracks"],
-        answer: 2,
-      },
-    ],
+      }
+    ]
   },
   {
     id: "ice-drift",
     name: "Ice Drift",
     slug: "ice-drift",
-    emoji: "❄️",
-    minSpeed: "150+ km/h",
-    surface: "Ice",
-    difficulty: "Expert",
-    youtubeId: "40s98XOoW4w",
-    description: `Ice Drift is the most demanding surface-specific technique in TrackMania 2020, requiring players to maintain controlled sliding on the extremely low-friction ice surface. Ice has a friction coefficient approximately 10x lower than road, meaning conventional racing lines and inputs are completely ineffective—and learning ice is essentially learning to race a completely different physics model.\n\nThe fundamental challenge of the Ice Drift is that corrections must be made before the car is visibly out of control. The car's rotational inertia on ice means that a steering input made now will only take full effect 0.5-1 second later. Over-correction is the most common beginner mistake, leading to the characteristic over-steer oscillation that makes ice sections feel impossible.\n\nProfessional-level Ice Drift involves driving at speeds that seem recklessly fast—often 300+ km/h—while making micro-corrections with minimal steering input. The car appears to float through corners as the rear slides predictably. The key realization is that the optimal ice drift angle is much shallower than it looks: 5-10 degrees of yaw is controlled; 20+ degrees is heading toward a spin.\n\nOn PC keyboard, the digital steering creates challenges because you cannot apply partial inputs. Advanced players compensate by using rapid left-right tap combinations that simulate analog input. Controller players have a significant advantage here with natural analog stick precision.\n\nThe Ice Drift mastery unlocks some of the fastest routing on ice sections, as fully controlled slides can be significantly faster than attempting to go straight on ice (which typically isn't possible anyway at speed).`,
+    emoji: "🧊",
+    minSpeed: "200+ km/h",
+    surface: "Ghiaccio",
+    difficulty: "Esperto",
+    youtubeId: "w5eHQNp3hZc",
+    startTime: 294,
+    imageUrl: "https://sm.ign.com/t/ign_me/screenshot/s/screenshot/screenshot-of-trackmania-2020_m8cb.1400.jpg",
+    description: `L'Ice Drift richiede di sterzare nella direzione opposta a quella voluta per iniziare la scivolata, e poi controsterzare per mantenerla.
+    
+A differenza dell'asfalto, il controllo avviene quasi interamente tramite l'angolo di sterzata e piccoli rilasci dell'acceleratore.`,
     controls: {
-      pc: "W + rapid A/D micro-taps for steering",
-      xbox: "RT + micro Stick adjustments (minimal input)",
-      ps: "R2 + micro Stick adjustments (minimal input)",
+      pc: "Sterza opposto (A/D) poi ruota verso la curva + colpetti di W",
+      xbox: "Stick analogico (L) con rotazioni fluide + controllo RT",
+      ps: "Stick analogico (L) con rotazioni fluide + controllo R2",
     },
     quiz: [
       {
-        q: "Ice friction coefficient compared to road surface is approximately:",
-        options: ["2x lower", "5x lower", "10x lower", "Same"],
-        answer: 2,
-      },
-      {
-        q: "What is the most common beginner mistake on ice?",
-        options: ["Going too slow", "Over-correction leading to oscillation", "Using wrong surface button", "Turning too sharp"],
+        q: "Come si inizia un Ice Drift?",
+        options: ["Frenando forte", "Sterzando nella direzione opposta alla curva", "Andando piano", "Usando il freno a mano"],
         answer: 1,
-      },
-      {
-        q: "The optimal controlled ice drift yaw angle is:",
-        options: ["0-2 degrees", "5-10 degrees", "20-30 degrees", "45+ degrees"],
-        answer: 1,
-      },
-      {
-        q: "Why do controller players have an advantage on ice?",
-        options: ["Controllers have vibration feedback", "Natural analog stick gives partial steering inputs", "Controllers have ice-mode", "Auto-correct feature"],
-        answer: 1,
-      },
-      {
-        q: "Ice drift corrections must be made:",
-        options: ["After the car is visibly sliding", "At the exact moment of slide", "Before the car is visibly out of control", "Only when fully sideways"],
-        answer: 2,
-      },
-    ],
+      }
+    ]
   },
   {
     id: "road-drift",
     name: "Road Drift",
     slug: "road-drift",
-    emoji: "🏁",
-    minSpeed: "200+ km/h",
-    surface: "Road",
-    difficulty: "Beginner",
-    youtubeId: "eCQUPQExtN4",
-    description: `Road Drift is the entry-level drift technique in TrackMania 2020 and the first technique new players typically learn after mastering basic acceleration and braking. It forms the bridge between casual racing and technical play, introducing the concept that controlled sliding can be faster than trying to maintain full traction in corners.\n\nThe road surface in TrackMania 2020 has well-documented grip characteristics: high traction up to a threshold angle, then a rapid transition into slide. Road Drift intentionally crosses this threshold in a controlled manner, using the slide's reduced friction to carry speed around corners that braking alone wouldn't allow.\n\nInitiation is straightforward: approach a corner at speed (200+ km/h), turn in sharply with full steering lock, and briefly tap the brake to unsettle the rear. The rear will step out into a slide. The driver then counter-steers to prevent spin and controls the drift angle by modulating both gas and steering.\n\nGas control is the most important skill: too much gas widens the drift angle (potentially to a spin), too little allows the car to grip up and understeer. Finding the "drift balance point" is a feel that develops with practice. Most players achieve consistent execution within 3-5 hours of focused practice.\n\nRoad Drift is also distinguished by its visual reward—the signature tire marks and smoke effect are highly satisfying and serve as visual feedback that the technique is working correctly. If you see symmetric tire tracks through the corner, your drift angle was consistent. Asymmetric tracks suggest corrections were made.`,
+    emoji: "🛣️",
+    minSpeed: "180-350 km/h",
+    surface: "Asfalto",
+    difficulty: "Principiante",
+    youtubeId: "w5eHQNp3hZc",
+    startTime: 129,
+    imageUrl: "https://sm.ign.com/t/ign_me/screenshot/s/screenshot/screenshot-of-trackmania-2020_5kmg.1400.jpg",
+    description: `Il Road Drift è la prima tecnica che ogni pilota impara. È essenziale per affrontare curve medie e strette su asfalto senza perdere troppa velocità.
+    
+Per iniziarlo, devi sterzare per circa mezzo secondo e poi premere il freno mantenendo l'acceleratore premuto.`,
     controls: {
-      pc: "W + A/D full lock + brief S tap to initiate",
-      xbox: "RT full + Stick full + LT brief tap",
-      ps: "R2 full + Stick full + L2 brief tap",
+      pc: "Tieni W + Sterza + Premi S (Freno) dopo 0.5s",
+      xbox: "Tieni RT + Sterza + Premi LT (Freno) dopo 0.5s",
+      ps: "Tieni R2 + Sterza + Premi L2 (Freno) dopo 0.5s",
     },
     quiz: [
       {
-        q: "Road Drift is best described as:",
-        options: ["Braking hard before every corner", "Controlled rear-wheel slide through corners", "Driving on the track edge", "Using game's turbo item"],
+        q: "Quando va premuto il freno per iniziare un Road Drift?",
+        options: ["Prima di sterzare", "Circa 0.5 secondi dopo aver iniziato a sterzare", "Sempre", "Mai"],
         answer: 1,
-      },
+      }
+    ]
+  },
+  {
+    id: "gear-management",
+    name: "Gestione Marce",
+    slug: "gear-management",
+    emoji: "⚙️",
+    minSpeed: "Qualsiasi",
+    surface: "Qualsiasi",
+    difficulty: "Avanzato",
+    youtubeId: "1tkVQ2uL7Iw",
+    startTime: 1090,
+    imageUrl: "https://sm.ign.com/t/ign_me/screenshot/s/screenshot/screenshot-of-trackmania-2020_da5k.1400.jpg",
+    description: `In TrackMania 2020 le marce sono automatiche, ma puoi influenzarle evitando slittamenti durante il cambio.
+    
+Imparare a tenere l'auto dritta o rilasciare leggermente sterzo/gas durante il cambio marcia assicura che il 100% della potenza sia trasferito al suolo.`,
+    controls: {
+      pc: "Rilascia brevemente lo sterzo durante il suono del cambio marcia",
+      xbox: "Rilascia brevemente lo sterzo durante il suono del cambio marcia",
+      ps: "Rilascia brevemente lo sterzo durante il suono del cambio marcia",
+    },
+    quiz: [
       {
-        q: "What happens with too much gas during a Road Drift?",
-        options: ["Better control", "The drift angle widens, risking spin", "Instant speed boost", "Car grips up"],
-        answer: 1,
-      },
-      {
-        q: "How long does it typically take to achieve consistent Road Drift execution?",
-        options: ["30 minutes", "5-10 minutes", "3-5 hours", "50+ hours"],
-        answer: 2,
-      },
-      {
-        q: "Symmetric tire tracks through a corner indicate:",
-        options: ["Wrong technique", "Consistent drift angle was maintained", "Too much speed", "Brake failure"],
-        answer: 1,
-      },
-      {
-        q: "At what speed should you approach a corner to initiate a Road Drift?",
-        options: ["Any speed", "Under 100 km/h", "Exactly 200 km/h", "200+ km/h"],
-        answer: 3,
-      },
-    ],
+        q: "Cosa può causare un 'gear loss'?",
+        options: ["Sterzare troppo bruscamente durante il cambio", "Andare troppo veloci", "Usare la skin sbagliata", "Saltare troppo"],
+        answer: 0,
+      }
+    ]
   },
 ];
 

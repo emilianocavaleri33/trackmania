@@ -18,7 +18,7 @@ export default function Navbar() {
           <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink>
           <NavLink to="/tecniche" className={({ isActive }) => isActive ? 'active' : ''}>Tecniche</NavLink>
           <NavLink to="/controller" className={({ isActive }) => isActive ? 'active' : ''}>Controller</NavLink>
-          <NavLink to="/maps" className={({ isActive }) => isActive ? 'active' : ''}>Training Maps</NavLink>
+          <NavLink to="/maps" className={({ isActive }) => isActive ? 'active' : ''}>Mappe Training</NavLink>
           <NavLink to="/profile" className={({ isActive }) => isActive ? 'active' : ''}>Profilo</NavLink>
         </div>
       </div>
