@@ -31,394 +31,99 @@ function ScreenshotPlaceholder({ label, colors }) {
   );
 }
 
-function TrajectorySVG({ technique }) {
-  const slug = technique?.slug || '';
-  const surface = technique?.surface || 'Qualsiasi';
-  
-  // Define simple geometric track layouts for each technique
-  const getTrackSVG = () => {
-    if (slug === 'speed-slide') {
-      // Speed Slide: L-shape curve (two rectangles)
-      return `
-        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-          <defs>
-            <filter id="glow">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff8800"/>
-            </filter>
-          </defs>
-          
-          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
-          
-          <!-- L-shape track -->
-          <rect x="30" y="40" width="200" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
-          <rect x="190" y="40" width="40" height="120" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
-          
-          <!-- Trajectory -->
-          <path d="M 50 60 L 200 60 L 200 140" 
-                fill="none" stroke="#ff8800" stroke-width="3" 
-                stroke-dasharray="200" stroke-dashoffset="200"
-                filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="200" to="0" dur="2s" fill="freeze"/>
-          </path>
-          
-          <!-- Badge -->
-          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
-          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🏁 Asfalto</text>
-        </svg>
-      `;
+function TrajectoryCanvas({ technique }) {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width;
+    const H = canvas.height;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Background
+    ctx.fillStyle = '#001a33';
+    ctx.fillRect(0, 0, W, H);
+
+    // Grid
+    ctx.strokeStyle = 'rgba(0,102,204,0.15)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < W; x += 40) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
     }
-    
-    if (slug === 'bug-slide') {
-      // Bug Slide: Sharp L-turn (two rectangles)
-      return `
-        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-          <defs>
-            <filter id="glow">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffff00"/>
-            </filter>
-          </defs>
-          
-          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
-          
-          <!-- L-shape track -->
-          <rect x="30" y="80" width="150" height="40" fill="#3a2010" stroke="#7a5020" stroke-width="1" rx="20"/>
-          <rect x="140" y="80" width="40" height="80" fill="#3a2010" stroke="#7a5020" stroke-width="1" rx="20"/>
-          
-          <!-- Trajectory -->
-          <path d="M 50 100 L 160 100 L 160 140" 
-                fill="none" stroke="#ffff00" stroke-width="3" 
-                stroke-dasharray="150" stroke-dashoffset="150"
-                filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="150" to="0" dur="2s" fill="freeze"/>
-          </path>
-          
-          <!-- Badge -->
-          <rect x="15" y="170" width="60" height="20" fill="#111" rx="3"/>
-          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🏖️ Dirt</text>
-        </svg>
-      `;
+    for (let y = 0; y < H; y += 40) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
     }
-    
-    if (slug === 'double-drift') {
-      // Double Drift: S-curve (three rectangles zigzag)
-      return `
-        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-          <defs>
-            <filter id="glow">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff00ff"/>
-            </filter>
-          </defs>
-          
-          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
-          
-          <!-- S-curve track (three rectangles) -->
-          <rect x="30" y="40" width="100" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
-          <rect x="80" y="80" width="100" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
-          <rect x="130" y="120" width="220" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
-          
-          <!-- Trajectory -->
-          <path d="M 50 60 L 110 60 L 110 100 L 170 100 L 170 140 L 330 140" 
-                fill="none" stroke="#ff00ff" stroke-width="3" 
-                stroke-dasharray="300" stroke-dashoffset="300"
-                filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="300" to="0" dur="2s" fill="freeze"/>
-          </path>
-          
-          <!-- Badge -->
-          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
-          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🏁 Asfalto</text>
-        </svg>
-      `;
+
+    // Track border
+    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+    ctx.lineWidth = 30;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    // Adjust path per technique type
+    const paths = {
+      'bug-slide': [[60,120],[180,120],[280,80],[380,80],[460,130],[500,200],[460,260],[380,280],[280,280]],
+      'double-drift': [[40,160],[160,160],[220,100],[300,100],[360,160],[420,220],[500,220],[560,160]],
+      'ice-drift': [[40,200],[140,200],[260,140],[360,200],[430,260],[530,200],[600,140]],
+      'wallride': [[40,80],[100,80],[200,200],[200,300],[300,300]],
+    };
+    const defaultPath = [[40,160],[150,160],[250,100],[380,100],[450,160],[480,240],[400,280],[280,280],[180,240]];
+    const pts = paths[technique?.slug] || defaultPath;
+
+    // Draw outer track area (wide stroke)
+    ctx.strokeStyle = 'rgba(30,60,100,0.6)';
+    ctx.lineWidth = 40;
+    ctx.beginPath();
+    ctx.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+    ctx.stroke();
+
+    // Ideal racing line
+    ctx.strokeStyle = '#0099ff';
+    ctx.lineWidth = 3;
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    ctx.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+    ctx.stroke();
+
+    // Technique slide line
+    ctx.strokeStyle = '#FF6600';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([8, 6]);
+    const offset = 20;
+    ctx.beginPath();
+    ctx.moveTo(pts[0][0], pts[0][1] + offset);
+    for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1] + offset * (i % 2 === 0 ? 1 : -1));
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Arrow markers
+    ctx.fillStyle = '#FF6600';
+    for (let i = 1; i < pts.length - 1; i += 2) {
+      const [x, y] = pts[i];
+      ctx.beginPath();
+      ctx.arc(x, y, 5, 0, Math.PI * 2);
+      ctx.fill();
     }
-    
-    if (slug === 'backwards-driving') {
-      // Backwards Driving: Straight track (one rectangle)
-      return `
-        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-          <defs>
-            <filter id="glow">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff8800"/>
-            </filter>
-          </defs>
-          
-          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
-          
-          <!-- Straight track -->
-          <rect x="30" y="80" width="320" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
-          
-          <!-- Trajectory (right to left) -->
-          <path d="M 330 100 L 50 100" 
-                fill="none" stroke="#ff8800" stroke-width="3" 
-                stroke-dasharray="280" stroke-dashoffset="280"
-                filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="280" to="0" dur="2s" fill="freeze"/>
-          </path>
-          
-          <!-- Badge -->
-          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
-          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🏁 Asfalto</text>
-        </svg>
-      `;
-    }
-    
-    if (slug === 'air-brake-roll') {
-      // Air Brake Roll: Jump ramp (rectangle + triangle)
-      return `
-        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-          <defs>
-            <filter id="glow">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00ccff"/>
-            </filter>
-          </defs>
-          
-          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
-          
-          <!-- Landing track -->
-          <rect x="30" y="100" width="120" height="40" fill="#0a2030" stroke="#4a90b0" stroke-width="1" rx="20"/>
-          <!-- Jump ramp (triangle) -->
-          <polygon points="150,100 230,100 190,60" fill="#0a2030" stroke="#4a90b0" stroke-width="1"/>
-          <!-- Landing track -->
-          <rect x="230" y="100" width="120" height="40" fill="#0a2030" stroke="#4a90b0" stroke-width="1" rx="20"/>
-          
-          <!-- Trajectory -->
-          <path d="M 50 120 Q 190 40 330 120" 
-                fill="none" stroke="#00ccff" stroke-width="3" 
-                stroke-dasharray="300" stroke-dashoffset="300"
-                filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="300" to="0" dur="2s" fill="freeze"/>
-          </path>
-          
-          <!-- Badge -->
-          <rect x="15" y="170" width="60" height="20" fill="#111" rx="3"/>
-          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">✈️ Aria</text>
-        </svg>
-      `;
-    }
-    
-    if (slug === 'wallride') {
-      // Wallride: L-shape with vertical wall
-      return `
-        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-          <defs>
-            <filter id="glow">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff8800"/>
-            </filter>
-          </defs>
-          
-          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
-          
-          <!-- Ground tracks -->
-          <rect x="30" y="150" width="80" height="30" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
-          <rect x="270" y="150" width="80" height="30" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
-          <!-- Wall (vertical rectangle) -->
-          <rect x="110" y="30" width="40" height="120" fill="#4a4a4a" stroke="#666" stroke-width="1" rx="20"/>
-          
-          <!-- Trajectory -->
-          <path d="M 50 165 L 110 165 L 110 60 L 150 60 L 150 165 L 310 165" 
-                fill="none" stroke="#ff8800" stroke-width="3" 
-                stroke-dasharray="250" stroke-dashoffset="250"
-                filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="250" to="0" dur="2s" fill="freeze"/>
-          </path>
-          
-          <!-- Badge -->
-          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
-          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🧗 Pareti</text>
-        </svg>
-      `;
-    }
-    
-    if (slug === 'scoot') {
-      // Scoot: Transition (two rectangles)
-      return `
-        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-          <defs>
-            <filter id="glow">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00ff00"/>
-            </filter>
-          </defs>
-          
-          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
-          
-          <!-- Dirt section -->
-          <rect x="30" y="80" width="160" height="40" fill="#3a2010" stroke="#7a5020" stroke-width="1" rx="20"/>
-          <!-- Grass section -->
-          <rect x="190" y="80" width="160" height="40" fill="#1a3a1a" stroke="#3a6a3a" stroke-width="1" rx="20"/>
-          
-          <!-- Trajectory -->
-          <path d="M 50 100 L 350 100" 
-                fill="none" stroke="#00ff00" stroke-width="3" 
-                stroke-dasharray="300" stroke-dashoffset="300"
-                filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="300" to="0" dur="2s" fill="freeze"/>
-          </path>
-          
-          <!-- Badge -->
-          <rect x="15" y="170" width="80" height="20" fill="#111" rx="3"/>
-          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🌱 Transizioni</text>
-        </svg>
-      `;
-    }
-    
-    if (slug === 'superdive') {
-      // Superdive: Diagonal descent (rectangle)
-      return `
-        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-          <defs>
-            <filter id="glow">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffff00"/>
-            </filter>
-          </defs>
-          
-          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
-          
-          <!-- Diagonal track -->
-          <rect x="30" y="40" width="320" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20" 
-                transform="rotate(-15 190 60)"/>
-          
-          <!-- Trajectory -->
-          <path d="M 50 60 L 330 120" 
-                fill="none" stroke="#ffff00" stroke-width="3" 
-                stroke-dasharray="300" stroke-dashoffset="300"
-                filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="300" to="0" dur="2s" fill="freeze"/>
-          </path>
-          
-          <!-- Badge -->
-          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
-          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">📉 Discese</text>
-        </svg>
-      `;
-    }
-    
-    if (slug === 'ice-drift') {
-      // Ice Drift: Wide curve (L-shape)
-      return `
-        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-          <defs>
-            <filter id="glow">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00ccff"/>
-            </filter>
-          </defs>
-          
-          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
-          
-          <!-- L-shape ice track -->
-          <rect x="30" y="40" width="200" height="50" fill="#0a2030" stroke="#4a90b0" stroke-width="1" rx="20"/>
-          <rect x="180" y="40" width="50" height="120" fill="#0a2030" stroke="#4a90b0" stroke-width="1" rx="20"/>
-          
-          <!-- Trajectory -->
-          <path d="M 50 65 L 200 65 L 200 140" 
-                fill="none" stroke="#00ccff" stroke-width="3" 
-                stroke-dasharray="200" stroke-dashoffset="200"
-                filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="200" to="0" dur="2s" fill="freeze"/>
-          </path>
-          
-          <!-- Badge -->
-          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
-          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🧊 Ghiaccio</text>
-        </svg>
-      `;
-    }
-    
-    if (slug === 'road-drift') {
-      // Road Drift: Simple curve (L-shape)
-      return `
-        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-          <defs>
-            <filter id="glow">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00ff00"/>
-            </filter>
-          </defs>
-          
-          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
-          
-          <!-- Simple L-shape curve -->
-          <rect x="30" y="60" width="150" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
-          <rect x="140" y="60" width="40" height="80" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
-          
-          <!-- Trajectory -->
-          <path d="M 50 80 L 160 80 L 160 120" 
-                fill="none" stroke="#00ff00" stroke-width="3" 
-                stroke-dasharray="150" stroke-dashoffset="150"
-                filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="150" to="0" dur="2s" fill="freeze"/>
-          </path>
-          
-          <!-- Badge -->
-          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
-          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🏁 Asfalto</text>
-        </svg>
-      `;
-    }
-    
-    if (slug === 'gear-management') {
-      // Gear Management: Straight track (one rectangle)
-      return `
-        <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-          <defs>
-            <filter id="glow">
-              <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff8800"/>
-            </filter>
-          </defs>
-          
-          <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
-          
-          <!-- Straight track -->
-          <rect x="30" y="80" width="320" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
-          
-          <!-- Trajectory -->
-          <path d="M 50 100 L 330 100" 
-                fill="none" stroke="#ff8800" stroke-width="3" 
-                stroke-dasharray="280" stroke-dashoffset="280"
-                filter="url(#glow)">
-            <animate attributeName="stroke-dashoffset" from="280" to="0" dur="2s" fill="freeze"/>
-          </path>
-          
-          <!-- Badge -->
-          <rect x="15" y="170" width="70" height="20" fill="#111" rx="3"/>
-          <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🏁 Asfalto</text>
-        </svg>
-      `;
-    }
-    
-    // Default SVG
-    return `
-      <svg viewBox="0 0 380 200" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
-        <defs>
-          <filter id="glow">
-            <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff8800"/>
-          </filter>
-        </defs>
-        
-        <rect width="380" height="200" fill="#0d0d0d" rx="8"/>
-        <rect x="30" y="80" width="320" height="40" fill="#2a2a2a" stroke="#555" stroke-width="1" rx="20"/>
-        
-        <path d="M 50 100 L 330 100" 
-              fill="none" stroke="#ff8800" stroke-width="3" 
-              stroke-dasharray="280" stroke-dashoffset="280"
-              filter="url(#glow)">
-          <animate attributeName="stroke-dashoffset" from="280" to="0" dur="2s" fill="freeze"/>
-        </path>
-        
-        <rect x="15" y="170" width="60" height="20" fill="#111" rx="3"/>
-        <text x="20" y="184" font-family="Arial" font-size="11" fill="#ffffff">🏁 Pista</text>
-      </svg>
-    `;
-  };
+
+    // Labels
+    ctx.font = 'bold 11px Inter, sans-serif';
+    ctx.fillStyle = '#0099ff';
+    ctx.fillText('Traiettoria ideale', 10, H - 30);
+    ctx.fillStyle = '#FF6600';
+    ctx.fillText('Tecnica applicata', 10, H - 14);
+  }, [technique]);
 
   return (
-    <div 
-      className="trajectory-svg-wrapper" 
-      style={{ 
-        background: '#000000', 
-        borderRadius: '12px', 
-        padding: '20px', 
-        border: '1px solid #333',
-        overflow: 'hidden'
-      }}
-      dangerouslySetInnerHTML={{ __html: getTrackSVG() }}
+    <canvas
+      ref={canvasRef}
+      width={640}
+      height={320}
+      className="trajectory-canvas"
     />
   );
 }
@@ -663,7 +368,7 @@ export default function TechniquePage() {
       {/* CANVAS TRAJECTORY */}
       <div className="section-block">
         <h2>🗺️ Traiettoria Ideale</h2>
-        <TrajectorySVG technique={technique} />
+        <TrajectoryCanvas technique={technique} />
         <div className="surface-indicator" style={{ marginTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>Superficie:</span>
           <span className="tc-badge badge-surface" style={{ 
