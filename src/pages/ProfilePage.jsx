@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { techniques } from '../data/techniques';
+import { useProfile } from '../context/ProfileContext';
 
 function getScoreColor(pct) {
   if (pct >= 80) return '#00cc66';
@@ -10,39 +11,30 @@ function getScoreColor(pct) {
 }
 
 export default function ProfilePage() {
-  const [results, setResults] = useState({});
+  const { 
+    profileData, 
+    clearAllData, 
+    updateProfileName,
+    completedCount,
+    totalTechniques,
+    completionPercentage,
+    isTechniqueStudied,
+    getTechniqueResult
+  } = useProfile();
 
+  // Try to sync with backend on mount
   useEffect(() => {
-    // Load from localStorage
     const local = JSON.parse(localStorage.getItem('tm_quiz_results') || '{}');
-    setResults(local);
-    // Try merge from backend
     axios
       .get('http://localhost:8000/api/quiz/results', { timeout: 2000 })
       .then((res) => {
-        const merged = { ...local, ...res.data };
-        setResults(merged);
+        // Merge with existing data if needed
+        console.log('Backend data available:', res.data);
       })
       .catch(() => {});
   }, []);
 
-  const completed = Object.keys(results).length;
-  const totalTechniques = techniques.length;
-  const avgScore =
-    completed === 0
-      ? 0
-      : Math.round(
-          Object.values(results).reduce((a, r) => a + (r.percentage || 0), 0) / completed
-        );
-  const perfect = Object.values(results).filter((r) => r.percentage === 100).length;
-
-  function handleClear() {
-    localStorage.removeItem('tm_quiz_results');
-    setResults({});
-    axios
-      .delete('http://localhost:8000/api/quiz/results', { timeout: 2000 })
-      .catch(() => {});
-  }
+  const { averageScore, perfectQuizzes, profileName, joinDate } = profileData;
 
   return (
     <div className="page-wrapper">
@@ -55,22 +47,25 @@ export default function ProfilePage() {
       <div className="profile-header">
         <div className="profile-avatar">🏎️</div>
         <div className="profile-info">
-          <h2>Campione TrackMania</h2>
+          <h2>{profileName}</h2>
           <p>La tua scalata verso la maestria tecnica di TrackMania 2020.</p>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>
+            Membro dal: {new Date(joinDate).toLocaleDateString('it-IT')}
+          </p>
         </div>
       </div>
 
       <div className="profile-stats">
         <div className="stat-card">
-          <div className="stat-value">{completed}/{totalTechniques}</div>
+          <div className="stat-value">{completedCount}/{totalTechniques}</div>
           <div className="stat-label">Tecniche Studiate</div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{avgScore}%</div>
+          <div className="stat-value">{averageScore}%</div>
           <div className="stat-label">Risultato Medio</div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{perfect}</div>
+          <div className="stat-value">{perfectQuizzes}</div>
           <div className="stat-label">Quiz Perfetti ⭐</div>
         </div>
       </div>
@@ -79,7 +74,7 @@ export default function ProfilePage() {
         <h2>📊 Progressi per Tecnica</h2>
 
         {techniques.map((t) => {
-          const r = results[t.slug];
+          const r = getTechniqueResult(t.slug);
           const pct = r ? r.percentage : 0;
           const color = getScoreColor(pct);
 
@@ -105,13 +100,13 @@ export default function ProfilePage() {
           );
         })}
 
-        {completed > 0 && (
-          <button className="clear-btn" onClick={handleClear}>
+        {completedCount > 0 && (
+          <button className="clear-btn" onClick={clearAllData}>
             🗑️ Cancella tutti i progressi
           </button>
         )}
 
-        {completed === 0 && (
+        {completedCount === 0 && (
           <div
             style={{
               textAlign: 'center',

@@ -1,7 +1,8 @@
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
-import { getTechniqueBySlug } from '../data/techniques';
 import axios from 'axios';
+import { getTechniqueBySlug } from '../data/techniques';
+import { useProfile } from '../context/ProfileContext';
 
 // Per-technique screenshot palette (3 unique gradient screenshots using canvas-generated placeholders)
 function ScreenshotPlaceholder({ label, colors }) {
@@ -257,19 +258,21 @@ const SCREENSHOT_LABELS = [
 export default function TechniquePage() {
   const { slug } = useParams();
   const technique = getTechniqueBySlug(slug);
+  const { saveQuizResult, markTechniqueStudied } = useProfile();
+
+  // Mark technique as studied when page loads
+  useEffect(() => {
+    if (technique) {
+      markTechniqueStudied(slug);
+    }
+  }, [technique, slug, markTechniqueStudied]);
 
   async function handleQuizComplete(score) {
+    // Save to profile context (which handles localStorage)
+    saveQuizResult(slug, score, technique.quiz.length);
+    
+    // Also try backend for compatibility
     const result = { technique: slug, score, total: technique.quiz.length };
-    // Save to localStorage
-    const saved = JSON.parse(localStorage.getItem('tm_quiz_results') || '{}');
-    saved[slug] = {
-      score,
-      total: technique.quiz.length,
-      percentage: Math.round((score / technique.quiz.length) * 100),
-      timestamp: new Date().toISOString(),
-    };
-    localStorage.setItem('tm_quiz_results', JSON.stringify(saved));
-    // Try backend
     try {
       await axios.post('http://localhost:8000/api/quiz/save', result, { timeout: 2000 });
     } catch { /* backend optional */ }
